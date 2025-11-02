@@ -639,6 +639,7 @@
                     template += `   Objetivo: ${data.objetivo || ''}\n\n`;
                 }
                 if (config.fields.issuesEnabled && data.issues && data.issues.length > 0) {
+                    template += `\n## Issues:\n`;
                     data.issues.forEach((issue) => {
                         template += `   - ${issue || '?'}\n`;
                     });
