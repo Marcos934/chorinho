@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0.0
 // @description  Extensão para formatar CHORE de tasks em Markdown no runrun.it
-// @author       Your Name
+// @author       Marcos V. Mulinari
 // @match        https://runrun.it/pt-BR/*
 // @grant        none
 // @require      https://cdn.jsdelivr.net/npm/marked/marked.min.js
