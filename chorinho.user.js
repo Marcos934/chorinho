@@ -387,6 +387,59 @@
             width: 300px;
             z-index: 99999999;
         }
+
+        /* Dark Mode */
+        .chorinho-panel.dark-mode {
+            background: #2d333b;
+            color: #c9d1d9;
+        }
+        .chorinho-panel.dark-mode .chorinho-header {
+            background: #1c2128;
+            border-bottom: 1px solid #444c56;
+        }
+        .chorinho-panel.dark-mode .chorinho-section label {
+            color: #c9d1d9;
+        }
+        .chorinho-panel.dark-mode .chorinho-input,
+        .chorinho-panel.dark-mode .chorinho-textarea {
+            background: #1c2128;
+            border-color: #444c56;
+            color: #c9d1d9;
+        }
+        .chorinho-panel.dark-mode .chorinho-static-field {
+            background: #1c2128;
+            border-color: #444c56;
+            color: #c9d1d9;
+        }
+        .chorinho-panel.dark-mode .chorinho-tab {
+            color: #8b949e;
+        }
+        .chorinho-panel.dark-mode .chorinho-tab.active {
+            color: #c9d1d9;
+            border-bottom-color: #f9826c;
+        }
+        .chorinho-panel.dark-mode .chorinho-tabs {
+            border-bottom-color: #444c56;
+        }
+        .chorinho-panel.dark-mode .chorinho-history-item {
+            background: #1c2128;
+            border-color: #444c56;
+            border-left-color: #f9826c;
+        }
+        .chorinho-panel.dark-mode .chorinho-history-item h4 {
+            color: #c9d1d9;
+        }
+        .chorinho-panel.dark-mode .chorinho-history-item p {
+            color: #8b949e;
+        }
+        .chorinho-panel.dark-mode .chorinho-preview {
+            background: #1c2128;
+            border-color: #444c56;
+        }
+        .chorinho-panel.dark-mode .chorinho-preview h2 {
+            color: #c9d1d9;
+            border-bottom-color: #444c56;
+        }
     `;
 
     // ==================== UTILITÁRIOS ====================
@@ -545,7 +598,8 @@
                     comandos: true,
                     observacoes: true,
                     navegacao: true,
-                    previewEnabled: false // Feature flag para o preview
+                    previewEnabled: false, // Feature flag para o preview
+                    darkMode: false
                 }
             };
         },
@@ -637,6 +691,7 @@
             this.createPanel();
             this.setupEventListeners();
             this.checkModalState();
+            this.applyDarkMode();
         }
 
         injectStyles() {
@@ -835,6 +890,10 @@
                                 <div class="chorinho-checkbox-item">
                                     <input type="checkbox" id="config-observacoes" checked>
                                     <label for="config-observacoes">Observações/Notas</label>
+                                </div>
+                                <div class="chorinho-checkbox-item">
+                                    <input type="checkbox" id="config-darkMode">
+                                    <label for="config-darkMode">Modo Escuro</label>
                                 </div>
                             </div>
                         </div>
@@ -1173,6 +1232,7 @@
             document.getElementById('config-comandos').checked = config.fields.comandos;
             document.getElementById('config-observacoes').checked = config.fields.observacoes;
             document.getElementById('config-navegacao').checked = config.fields.navegacao;
+            document.getElementById('config-darkMode').checked = config.fields.darkMode;
         }
 
         showAlert(message, type = 'success') {
@@ -1241,6 +1301,15 @@
                 warningDiv.style.display = 'block';
             } else {
                 warningDiv.style.display = 'none';
+            }
+        }
+
+        applyDarkMode() {
+            const config = Storage.getConfig();
+            if (config.fields.darkMode) {
+                this.panel.classList.add('dark-mode');
+            } else {
+                this.panel.classList.remove('dark-mode');
             }
         }
     }
@@ -1366,12 +1435,14 @@
                     fluxo: document.getElementById('config-fluxo').checked,
                     comandos: document.getElementById('config-comandos').checked,
                     observacoes: document.getElementById('config-observacoes').checked,
-                    navegacao: document.getElementById('config-navegacao').checked
+                    navegacao: document.getElementById('config-navegacao').checked,
+                    darkMode: document.getElementById('config-darkMode').checked
                 }
             };
 
             Storage.saveConfig(config);
             this.ui.applyFieldsVisibility();
+            this.ui.applyDarkMode();
             this.ui.showAlert('Configurações salvas com sucesso!', 'success');
         }
 
