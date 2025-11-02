@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CHORINHO - Formatador de CHORE para runrun.it
 // @namespace    http://tampermonkey.net/
-// @version      1.0.1
+// @version      1.0.2
 // @description  Extensão para formatar CHORE de tasks em Markdown no runrun.it
 // @author       Marcos V. Mulinari
 // @match        https://runrun.it/pt-BR/*
@@ -1354,11 +1354,22 @@
             const data = this.getFormData(); // Use getFormData to get current values
             const hiddenFieldsWithValue = [];
 
-            // Define all configurable fields
-            const configurableFields = [
-                'sistema', 'mr', 'branch', 'descricao', 'objetivo', 'issuesEnabled', 'solucao', 'modificacoes',
-                'fluxo', 'comandos', 'observacoes', 'navegacao'
-            ];
+            const fieldDisplayNames = {
+                sistema: 'Sistema',
+                mr: 'MR',
+                branch: 'Branch',
+                descricao: 'Descrição',
+                objetivo: 'Objetivo',
+                issuesEnabled: 'Issues',
+                solucao: 'Solução Implementada',
+                modificacoes: 'Modificações',
+                fluxo: 'Fluxo de teste na UI',
+                comandos: 'Comandos para testes BANCO DE DADOS',
+                observacoes: 'Observações/Notas',
+                navegacao: 'Navegação na UI'
+            };
+
+            const configurableFields = Object.keys(fieldDisplayNames);
 
             configurableFields.forEach(field => {
                 const elements = this.panel.querySelectorAll(`[data-field="${field}"]`);
@@ -1374,8 +1385,18 @@
                     
                     el.style.display = isVisible ? 'block' : 'none';
 
-                    if (!isVisible && data[field] && data[field].length > 0) {
-                        hiddenFieldsWithValue.push(field);
+                    if (!isVisible) {
+                        let fieldValue = data[field];
+                        if (field === 'issuesEnabled') {
+                            fieldValue = data.issues;
+                        }
+
+                        if (fieldValue && fieldValue.length > 0) {
+                            const displayName = fieldDisplayNames[field];
+                            if (!hiddenFieldsWithValue.includes(displayName)) {
+                                hiddenFieldsWithValue.push(displayName);
+                            }
+                        }
                     }
                 });
             });
