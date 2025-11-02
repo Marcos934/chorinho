@@ -803,7 +803,7 @@
                         </div>
 
                         <div class="chorinho-section">
-                            <button class="chorinho-btn" onclick="chorinhoApp.saveCurrentChorinho()">${Icons.save} Salvar</button>
+                            <button class="chorinho-btn" onclick="chorinhoApp.saveCurrentChorinho()">${Icons.save} &nbsp;Salvar</button>
                             <button class="chorinho-btn chorinho-btn-success" onclick="chorinhoApp.copyMarkdown()">${Icons.copy} Copiar Markdown</button>
                             <button class="chorinho-btn chorinho-btn-secondary" onclick="chorinhoApp.downloadMarkdown()">${Icons.download} Baixar .md</button>
                         </div>
@@ -898,7 +898,7 @@
                             </div>
                         </div>
                         <div class="chorinho-section">
-                            <button class="chorinho-btn" onclick="chorinhoApp.saveConfig()">${Icons.save} Salvar Configurações</button>
+                            <button class="chorinho-btn" onclick="chorinhoApp.saveConfig()">${Icons.save} &nbsp;Salvar Configurações</button>
                         </div>
                     </div>
                 </div>
