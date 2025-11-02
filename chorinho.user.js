@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         CHORINHO - Formatador de CHORE para runrun.it
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.0.1
 // @description  Extensão para formatar CHORE de tasks em Markdown no runrun.it
 // @author       Marcos V. Mulinari
 // @match        https://runrun.it/pt-BR/*
 // @grant        none
 // @require      https://cdn.jsdelivr.net/npm/marked/marked.min.js
+// @require      https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js
 // ==/UserScript==
 
 (function() {
@@ -26,7 +27,8 @@
         document: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16"><path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-3z"/></svg>',
         link: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/><path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/></svg>',
         plus: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/></svg>',
-        gear: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/></svg>'
+        gear: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"/><path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"/></svg>',
+        drag: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grip-vertical" viewBox="0 0 16 16"><path d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg>'
     };
 
     // ==================== ESTILOS ====================
@@ -388,6 +390,17 @@
             z-index: 99999999;
         }
 
+        .chorinho-drag-handle {
+            cursor: grab;
+            color: #586069;
+            margin-left: 8px;
+        }
+
+        .chorinho-sortable-ghost {
+            opacity: 0.4;
+            background: #f0f0f0;
+        }
+
         /* Dark Mode */
         .chorinho-panel.dark-mode {
             background: #2d333b;
@@ -591,7 +604,6 @@
                     descricao: true,
                     objetivo: true, // Novo campo para Objetivo
                     issuesEnabled: true, // Novo campo para habilitar/desabilitar Issues
-                    issuesCheckboxes: false, // Novo campo para habilitar/desabilitar checkboxes nas Issues
                     solucao: true,
                     modificacoes: true,
                     fluxo: true,
@@ -690,6 +702,7 @@
             this.injectStyles();
             this.createFloatButton();
             this.createPanel();
+            this.initSortable();
             this.setupEventListeners();
             this.checkModalState();
             this.applyDarkMode();
@@ -764,6 +777,10 @@
 
                         <div class="chorinho-section" data-field="issuesEnabled">
                             <label>Issues</label>
+                            <div class="chorinho-checkbox-item" style="margin-bottom: 10px;">
+                                <input type="checkbox" id="chorinho-issues-checkboxes">
+                                <label for="chorinho-issues-checkboxes">Habilitar Checkboxes</label>
+                            </div>
                             <div class="chorinho-issues-container" id="chorinho-issues-container">
                                 <div class="chorinho-issue-item">
                                     <input type="text" class="chorinho-input" placeholder="Issue 1" data-issue-index="0">
@@ -860,12 +877,6 @@
                                     <div class="chorinho-checkbox-item">
                                         <input type="checkbox" id="config-issuesEnabled" checked>
                                         <label for="config-issuesEnabled">Issues</label>
-                                    </div>
-                                    <div class="chorinho-config-subgroup">
-                                        <div class="chorinho-checkbox-item">
-                                            <input type="checkbox" id="config-issuesCheckboxes">
-                                            <label for="config-issuesCheckboxes">Habilitar Checkboxes</label>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="chorinho-checkbox-item">
@@ -964,6 +975,11 @@
             configTab.addEventListener('click', () => {
                 toggleSubGroup(configDescricao, subGroupDescricao);
                 toggleSubGroup(configIssuesEnabled, subGroupIssues);
+            });
+
+            document.getElementById('chorinho-issues-checkboxes').addEventListener('change', () => {
+                this.refreshIssuesUI();
+                this.autoSaveCurrentData();
             });
         }
 
@@ -1100,14 +1116,17 @@
             document.getElementById('chorinho-navegacao').value = data.navegacao || '';
             document.getElementById('chorinho-comandos').value = data.comandos || '';
             document.getElementById('chorinho-observacoes').value = data.observacoes || '';
+            document.getElementById('chorinho-issues-checkboxes').checked = data.issuesCheckboxes || false;
 
             // Carregar issues
+            const container = document.getElementById('chorinho-issues-container');
+            container.innerHTML = '';
             if (data.issues && data.issues.length > 0) {
-                const container = document.getElementById('chorinho-issues-container');
-                container.innerHTML = '';
                 data.issues.forEach((issue, index) => {
                     this.addIssueElement(index, issue);
                 });
+            } else {
+                this.addIssueElement(0);
             }
 
             this.applyFieldsVisibility();
@@ -1115,8 +1134,7 @@
 
         getFormData() {
             const issues = [];
-            const config = Storage.getConfig();
-            const showCheckboxes = config.fields.issuesCheckboxes;
+            const showCheckboxes = document.getElementById('chorinho-issues-checkboxes').checked;
 
             document.querySelectorAll('.chorinho-issue-item').forEach(item => {
                 const input = item.querySelector('input[type="text"]');
@@ -1153,6 +1171,7 @@
                 branch: document.getElementById('chorinho-branch').value,
                 objetivo: document.getElementById('chorinho-objetivo').value,
                 issues: issues,
+                issuesCheckboxes: document.getElementById('chorinho-issues-checkboxes').checked,
                 solucao: document.getElementById('chorinho-solucao').value,
                 modificacoes: document.getElementById('chorinho-modificacoes').value,
                 fluxo: document.getElementById('chorinho-fluxo').value,
@@ -1171,16 +1190,16 @@
             const container = document.getElementById('chorinho-issues-container');
             const issueDiv = document.createElement('div');
             issueDiv.className = 'chorinho-issue-item';
-            const config = Storage.getConfig();
-            const showCheckboxes = config.fields.issuesCheckboxes;
+            const showCheckboxes = document.getElementById('chorinho-issues-checkboxes').checked;
 
             const isChecked = value.startsWith('[x] ');
-            const textValue = showCheckboxes ? value.replace(/\[[x ]\]\s*/, '') : value;
+            const textValue = value.replace(/\[[x ]\]\s*/, '');
 
             issueDiv.innerHTML = `
                 ${showCheckboxes ? `<input type="checkbox" class="chorinho-issue-checkbox" id="issue-checkbox-${index}" ${isChecked ? 'checked' : ''}>` : ''}
                 <input type="text" class="chorinho-input" placeholder="Issue ${index + 1}" data-issue-index="${index}" value="${textValue}">
                 <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" onclick="chorinhoApp.removeIssue(${index})">${Icons.close}</button>
+                <span class="chorinho-drag-handle">${Icons.drag}</span>
             `;
             container.appendChild(issueDiv);
 
@@ -1190,6 +1209,72 @@
                     chorinhoApp.ui.autoSaveCurrentData();
                 });
             }
+        }
+
+        refreshIssuesUI() {
+            const issuesContainer = document.getElementById('chorinho-issues-container');
+            const issueItems = issuesContainer.querySelectorAll('.chorinho-issue-item');
+            const issues = [];
+            
+            issueItems.forEach(item => {
+                const input = item.querySelector('input[type="text"]');
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                
+                let issueString = input.value;
+                if (checkbox) {
+                    if (checkbox.checked) {
+                        issueString = '[x] ' + issueString;
+                    } else {
+                        issueString = '[ ] ' + issueString;
+                    }
+                }
+                issues.push(issueString);
+            });
+
+            issuesContainer.innerHTML = '';
+
+            if (issues.length > 0) {
+                issues.forEach((issue, index) => {
+                    this.addIssueElement(index, issue);
+                });
+            } else {
+                this.addIssueElement(0);
+            }
+        }
+
+        initSortable() {
+            const container = document.getElementById('chorinho-issues-container');
+            if (typeof Sortable !== 'undefined') {
+                new Sortable(container, {
+                    animation: 150,
+                    ghostClass: 'chorinho-sortable-ghost',
+                    handle: '.chorinho-drag-handle',
+                    onEnd: () => {
+                        this.reindexIssues();
+                        this.autoSaveCurrentData();
+                    }
+                });
+            }
+        }
+
+        reindexIssues() {
+            const container = document.getElementById('chorinho-issues-container');
+            const items = container.querySelectorAll('.chorinho-issue-item');
+            items.forEach((item, idx) => {
+                const textInput = item.querySelector('input[type="text"]');
+                if (textInput) {
+                    textInput.dataset.issueIndex = idx;
+                    textInput.placeholder = `Issue ${idx + 1}`;
+                }
+                const removeButton = item.querySelector('button');
+                if (removeButton) {
+                    removeButton.onclick = () => chorinhoApp.removeIssue(idx);
+                }
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.id = `issue-checkbox-${idx}`;
+                }
+            });
         }
 
         renderHistory() {
@@ -1226,7 +1311,6 @@
             document.getElementById('config-descricao').checked = config.fields.descricao;
             document.getElementById('config-objetivo').checked = config.fields.objetivo;
             document.getElementById('config-issuesEnabled').checked = config.fields.issuesEnabled;
-            document.getElementById('config-issuesCheckboxes').checked = config.fields.issuesCheckboxes;
             document.getElementById('config-solucao').checked = config.fields.solucao;
             document.getElementById('config-modificacoes').checked = config.fields.modificacoes;
             document.getElementById('config-fluxo').checked = config.fields.fluxo;
@@ -1332,16 +1416,7 @@
             const items = container.querySelectorAll('.chorinho-issue-item');
             if (items.length > 1) {
                 items[index].remove();
-                // Re-index remaining items
-                const remainingItems = container.querySelectorAll('.chorinho-issue-item');
-                remainingItems.forEach((item, idx) => {
-                    const textInput = item.querySelector('input[type="text"]');
-                    if (textInput) {
-                        textInput.dataset.issueIndex = idx;
-                        textInput.placeholder = `Issue ${idx + 1}`;
-                    }
-                    item.querySelector('button').onclick = () => chorinhoApp.removeIssue(idx);
-                });
+                this.ui.reindexIssues();
             }
         }
 
@@ -1430,7 +1505,6 @@
                     descricao: document.getElementById('config-descricao').checked,
                     objetivo: document.getElementById('config-objetivo').checked,
                     issuesEnabled: document.getElementById('config-issuesEnabled').checked,
-                    issuesCheckboxes: document.getElementById('config-issuesCheckboxes').checked,
                     solucao: document.getElementById('config-solucao').checked,
                     modificacoes: document.getElementById('config-modificacoes').checked,
                     fluxo: document.getElementById('config-fluxo').checked,
@@ -1444,6 +1518,7 @@
             Storage.saveConfig(config);
             this.ui.applyFieldsVisibility();
             this.ui.applyDarkMode();
+            this.ui.refreshIssuesUI();
             this.ui.showAlert('Configurações salvas com sucesso!', 'success');
         }
 
@@ -1506,10 +1581,8 @@
     // ==================== INICIALIZAÇÃO ====================
     // Aguardar após o carregamento da página
     function init() {
-        setTimeout(() => {
         window.chorinhoApp = new ChorinhoApp();
         console.log('CHORINHO inicializado com sucesso!');
-        }, 200);
     }
     
     // Aguardar DOM estar pronto
