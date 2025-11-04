@@ -233,14 +233,14 @@
             font-size: 12px;
         }
 
-        .chorinho-issues-container {
+        .chorinho-plano-de-acao-container {
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             padding: 15px;
             margin-top: 10px;
         }
 
-        .chorinho-issue-item {
+        .chorinho-plano-de-acao-item {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
@@ -251,7 +251,7 @@
             flex: 1;
         }
 
-        .chorinho-issue-item .chorinho-issue-checkbox {
+        .chorinho-issue-item .chorinho-plano-de-acao-checkbox {
             margin-right: 5px;
         }
 
@@ -603,11 +603,12 @@
                     branch: true,
                     descricao: true,
                     objetivo: true, // Novo campo para Objetivo
-                    issuesEnabled: true, // Novo campo para habilitar/desabilitar Issues
+                    planoDeAcaoEnabled: true, // Novo campo para habilitar/desabilitar Plano de Ação
                     solucao: true,
                     modificacoes: true,
                     fluxo: true,
                     comandos: true,
+                    problemasEncontrados: true,
                     observacoes: true,
                     navegacao: true,
                     previewEnabled: false, // Feature flag para o preview
@@ -650,10 +651,10 @@
                 if (config.fields.objetivo) {
                     template += `   Objetivo: ${data.objetivo || ''}\n\n`;
                 }
-                if (config.fields.issuesEnabled && data.issues && data.issues.length > 0) {
-                    template += `\n## Issues:\n`;
-                    data.issues.forEach((issue) => {
-                        template += `   - ${issue || '?'}\n`;
+                if (config.fields.planoDeAcaoEnabled && data.planoDeAcao && data.planoDeAcao.length > 0) {
+                    template += `\n## Plano de Ação:\n`;
+                    data.planoDeAcao.forEach((plano) => {
+                        template += `   - ${plano || '?'}\n`;
                     });
                 }
                 template += `\n`;
@@ -677,6 +678,10 @@
 
             if (config.fields.comandos) {
                 template += `## Comandos para testes BANCO DE DADOS:\n \t${data.comandos || ''}\n\n`;
+            }
+
+            if (config.fields.problemasEncontrados) {
+                template += `## Problemas encontrados:\n \t${data.problemasEncontrados || ''}\n\n`;
             }
 
             if (config.fields.observacoes) {
@@ -775,19 +780,19 @@
                             <textarea class="chorinho-textarea" id="chorinho-objetivo"></textarea>
                         </div>
 
-                        <div class="chorinho-section" data-field="issuesEnabled">
-                            <label>Issues</label>
+                        <div class="chorinho-section" data-field="planoDeAcaoEnabled">
+                            <label>Plano de Ação</label>
                             <div class="chorinho-checkbox-item" style="margin-bottom: 10px;">
-                                <input type="checkbox" id="chorinho-issues-checkboxes">
-                                <label for="chorinho-issues-checkboxes">Habilitar Checkboxes</label>
+                                <input type="checkbox" id="chorinho-plano-de-acao-checkboxes">
+                                <label for="chorinho-plano-de-acao-checkboxes">Habilitar Checkboxes</label>
                             </div>
-                            <div class="chorinho-issues-container" id="chorinho-issues-container">
-                                <div class="chorinho-issue-item">
-                                    <input type="text" class="chorinho-input" placeholder="Issue 1" data-issue-index="0">
-                                    <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" onclick="chorinhoApp.removeIssue(0)">${Icons.close}</button>
+                            <div class="chorinho-plano-de-acao-container" id="chorinho-plano-de-acao-container">
+                                <div class="chorinho-plano-de-acao-item">
+                                    <input type="text" class="chorinho-input" placeholder="Plano de Ação 1" data-plano-de-acao-index="0">
+                                    <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" onclick="chorinhoApp.removePlanoDeAcao(0)">${Icons.close}</button>
                                 </div>
                             </div>
-                            <button class="chorinho-btn chorinho-btn-small chorinho-btn-success" onclick="chorinhoApp.addIssue()">${Icons.plus} Adicionar Issue</button>
+                            <button class="chorinho-btn chorinho-btn-small chorinho-btn-success" onclick="chorinhoApp.addPlanoDeAcao()">${Icons.plus} Adicionar Plano de Ação</button>
                         </div>
 
                         <div class="chorinho-section" data-field="solucao">
@@ -813,6 +818,11 @@
                         <div class="chorinho-section" data-field="comandos">
                             <label>Comandos para testes BANCO DE DADOS</label>
                             <textarea class="chorinho-textarea" id="chorinho-comandos"></textarea>
+                        </div>
+
+                        <div class="chorinho-section" data-field="problemasEncontrados">
+                            <label>Problemas encontrados</label>
+                            <textarea class="chorinho-textarea" id="chorinho-problemas-encontrados"></textarea>
                         </div>
 
                         <div class="chorinho-section" data-field="observacoes">
@@ -875,8 +885,8 @@
                                         <label for="config-objetivo">Objetivo</label>
                                     </div>
                                     <div class="chorinho-checkbox-item">
-                                        <input type="checkbox" id="config-issuesEnabled" checked>
-                                        <label for="config-issuesEnabled">Issues</label>
+                                        <input type="checkbox" id="config-planoDeAcaoEnabled" checked>
+                                        <label for="config-planoDeAcaoEnabled">Plano de Ação</label>
                                     </div>
                                 </div>
                                 <div class="chorinho-checkbox-item">
@@ -898,6 +908,10 @@
                                 <div class="chorinho-checkbox-item">
                                     <input type="checkbox" id="config-comandos" checked>
                                     <label for="config-comandos">Comandos para testes BANCO DE DADOS</label>
+                                </div>
+                                <div class="chorinho-checkbox-item">
+                                    <input type="checkbox" id="config-problemasEncontrados" checked>
+                                    <label for="config-problemasEncontrados">Problemas encontrados</label>
                                 </div>
                                 <div class="chorinho-checkbox-item">
                                     <input type="checkbox" id="config-observacoes" checked>
@@ -953,8 +967,8 @@
             // Config dependencies
             const configDescricao = document.getElementById('config-descricao');
             const subGroupDescricao = configDescricao.closest('.chorinho-checkbox-item').nextElementSibling;
-            const configIssuesEnabled = document.getElementById('config-issuesEnabled');
-            const subGroupIssues = configIssuesEnabled.closest('.chorinho-checkbox-item').nextElementSibling;
+            const configPlanoDeAcaoEnabled = document.getElementById('config-planoDeAcaoEnabled');
+            const subGroupPlanoDeAcao = configPlanoDeAcaoEnabled.closest('.chorinho-checkbox-item').nextElementSibling;
 
             const toggleSubGroup = (checkbox, subGroup) => {
                 if (subGroup) {
@@ -966,19 +980,19 @@
                 toggleSubGroup(configDescricao, subGroupDescricao);
             });
 
-            configIssuesEnabled.addEventListener('change', () => {
-                toggleSubGroup(configIssuesEnabled, subGroupIssues);
+            configPlanoDeAcaoEnabled.addEventListener('change', () => {
+                toggleSubGroup(configPlanoDeAcaoEnabled, subGroupPlanoDeAcao);
             });
 
             // Set initial state when config tab is switched to
             const configTab = this.panel.querySelector('.chorinho-tab[data-tab="config"]');
             configTab.addEventListener('click', () => {
                 toggleSubGroup(configDescricao, subGroupDescricao);
-                toggleSubGroup(configIssuesEnabled, subGroupIssues);
+                toggleSubGroup(configPlanoDeAcaoEnabled, subGroupPlanoDeAcao);
             });
 
-            document.getElementById('chorinho-issues-checkboxes').addEventListener('change', () => {
-                this.refreshIssuesUI();
+            document.getElementById('chorinho-plano-de-acao-checkboxes').addEventListener('change', () => {
+                this.refreshPlanoDeAcaoUI();
                 this.autoSaveCurrentData();
             });
         }
@@ -1115,36 +1129,37 @@
             document.getElementById('chorinho-fluxo').value = data.fluxo || '';
             document.getElementById('chorinho-navegacao').value = data.navegacao || '';
             document.getElementById('chorinho-comandos').value = data.comandos || '';
+            document.getElementById('chorinho-problemas-encontrados').value = data.problemasEncontrados || '';
             document.getElementById('chorinho-observacoes').value = data.observacoes || '';
-            document.getElementById('chorinho-issues-checkboxes').checked = data.issuesCheckboxes || false;
+            document.getElementById('chorinho-plano-de-acao-checkboxes').checked = data.planoDeAcaoCheckboxes || false;
 
-            // Carregar issues
-            const container = document.getElementById('chorinho-issues-container');
+            // Carregar plano de acao
+            const container = document.getElementById('chorinho-plano-de-acao-container');
             container.innerHTML = '';
-            if (data.issues && data.issues.length > 0) {
-                data.issues.forEach((issue, index) => {
-                    this.addIssueElement(index, issue);
+            if (data.planoDeAcao && data.planoDeAcao.length > 0) {
+                data.planoDeAcao.forEach((plano, index) => {
+                    this.addPlanoDeAcaoElement(index, plano);
                 });
             } else {
-                this.addIssueElement(0);
+                this.addPlanoDeAcaoElement(0);
             }
 
             this.applyFieldsVisibility();
         }
 
         getFormData() {
-            const issues = [];
-            const showCheckboxes = document.getElementById('chorinho-issues-checkboxes').checked;
+            const planoDeAcao = [];
+            const showCheckboxes = document.getElementById('chorinho-plano-de-acao-checkboxes').checked;
 
-            document.querySelectorAll('.chorinho-issue-item').forEach(item => {
+            document.querySelectorAll('.chorinho-plano-de-acao-item').forEach(item => {
                 const input = item.querySelector('input[type="text"]');
                 if (input && input.value.trim()) {
                     if (showCheckboxes) {
                         const checkbox = item.querySelector('input[type="checkbox"]');
                         const prefix = checkbox && checkbox.checked ? '[x] ' : '[ ] ';
-                        issues.push(prefix + input.value.trim());
+                        planoDeAcao.push(prefix + input.value.trim());
                     } else {
-                        issues.push(input.value.trim());
+                        planoDeAcao.push(input.value.trim());
                     }
                 }
             });
@@ -1170,13 +1185,14 @@
                 mr: document.getElementById('chorinho-mr').value,
                 branch: document.getElementById('chorinho-branch').value,
                 objetivo: document.getElementById('chorinho-objetivo').value,
-                issues: issues,
-                issuesCheckboxes: document.getElementById('chorinho-issues-checkboxes').checked,
+                planoDeAcao: planoDeAcao,
+                planoDeAcaoCheckboxes: document.getElementById('chorinho-plano-de-acao-checkboxes').checked,
                 solucao: document.getElementById('chorinho-solucao').value,
                 modificacoes: document.getElementById('chorinho-modificacoes').value,
                 fluxo: document.getElementById('chorinho-fluxo').value,
                 navegacao: document.getElementById('chorinho-navegacao').value,
                 comandos: document.getElementById('chorinho-comandos').value,
+                problemasEncontrados: document.getElementById('chorinho-problemas-encontrados').value,
                 observacoes: document.getElementById('chorinho-observacoes').value
             };
         }
@@ -1186,93 +1202,93 @@
             Storage.saveCurrentData(data);
         }
 
-        addIssueElement(index, value = '') {
-            const container = document.getElementById('chorinho-issues-container');
-            const issueDiv = document.createElement('div');
-            issueDiv.className = 'chorinho-issue-item';
-            const showCheckboxes = document.getElementById('chorinho-issues-checkboxes').checked;
+        addPlanoDeAcaoElement(index, value = '') {
+            const container = document.getElementById('chorinho-plano-de-acao-container');
+            const planoDeAcaoDiv = document.createElement('div');
+            planoDeAcaoDiv.className = 'chorinho-plano-de-acao-item';
+            const showCheckboxes = document.getElementById('chorinho-plano-de-acao-checkboxes').checked;
 
             const isChecked = value.startsWith('[x] ');
             const textValue = value.replace(/\[[x ]\]\s*/, '');
 
-            issueDiv.innerHTML = `
-                ${showCheckboxes ? `<input type="checkbox" class="chorinho-issue-checkbox" id="issue-checkbox-${index}" ${isChecked ? 'checked' : ''}>` : ''}
-                <input type="text" class="chorinho-input" placeholder="Issue ${index + 1}" data-issue-index="${index}" value="${textValue}">
-                <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" onclick="chorinhoApp.removeIssue(${index})">${Icons.close}</button>
+            planoDeAcaoDiv.innerHTML = `
+                ${showCheckboxes ? `<input type="checkbox" class="chorinho-plano-de-acao-checkbox" id="plano-de-acao-checkbox-${index}" ${isChecked ? 'checked' : ''}>` : ''}
+                <input type="text" class="chorinho-input" placeholder="Plano de Ação ${index + 1}" data-plano-de-acao-index="${index}" value="${textValue}">
+                <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" onclick="chorinhoApp.removePlanoDeAcao(${index})">${Icons.close}</button>
                 <span class="chorinho-drag-handle">${Icons.drag}</span>
             `;
-            container.appendChild(issueDiv);
+            container.appendChild(planoDeAcaoDiv);
 
             if (showCheckboxes) {
-                const checkbox = issueDiv.querySelector(`#issue-checkbox-${index}`);
+                const checkbox = planoDeAcaoDiv.querySelector(`#plano-de-acao-checkbox-${index}`);
                 checkbox.addEventListener('change', () => {
                     chorinhoApp.ui.autoSaveCurrentData();
                 });
             }
         }
 
-        refreshIssuesUI() {
-            const issuesContainer = document.getElementById('chorinho-issues-container');
-            const issueItems = issuesContainer.querySelectorAll('.chorinho-issue-item');
-            const issues = [];
+        refreshPlanoDeAcaoUI() {
+            const container = document.getElementById('chorinho-plano-de-acao-container');
+            const items = container.querySelectorAll('.chorinho-plano-de-acao-item');
+            const planos = [];
             
-            issueItems.forEach(item => {
+            items.forEach(item => {
                 const input = item.querySelector('input[type="text"]');
                 const checkbox = item.querySelector('input[type="checkbox"]');
                 
-                let issueString = input.value;
+                let planoString = input.value;
                 if (checkbox) {
                     if (checkbox.checked) {
-                        issueString = '[x] ' + issueString;
+                        planoString = '[x] ' + planoString;
                     } else {
-                        issueString = '[ ] ' + issueString;
+                        planoString = '[ ] ' + planoString;
                     }
                 }
-                issues.push(issueString);
+                planos.push(planoString);
             });
 
-            issuesContainer.innerHTML = '';
+            container.innerHTML = '';
 
-            if (issues.length > 0) {
-                issues.forEach((issue, index) => {
-                    this.addIssueElement(index, issue);
+            if (planos.length > 0) {
+                planos.forEach((plano, index) => {
+                    this.addPlanoDeAcaoElement(index, plano);
                 });
             } else {
-                this.addIssueElement(0);
+                this.addPlanoDeAcaoElement(0);
             }
         }
 
         initSortable() {
-            const container = document.getElementById('chorinho-issues-container');
+            const container = document.getElementById('chorinho-plano-de-acao-container');
             if (typeof Sortable !== 'undefined') {
                 new Sortable(container, {
                     animation: 150,
                     ghostClass: 'chorinho-sortable-ghost',
                     handle: '.chorinho-drag-handle',
                     onEnd: () => {
-                        this.reindexIssues();
+                        this.reindexPlanoDeAcao();
                         this.autoSaveCurrentData();
                     }
                 });
             }
         }
 
-        reindexIssues() {
-            const container = document.getElementById('chorinho-issues-container');
-            const items = container.querySelectorAll('.chorinho-issue-item');
+        reindexPlanoDeAcao() {
+            const container = document.getElementById('chorinho-plano-de-acao-container');
+            const items = container.querySelectorAll('.chorinho-plano-de-acao-item');
             items.forEach((item, idx) => {
                 const textInput = item.querySelector('input[type="text"]');
                 if (textInput) {
-                    textInput.dataset.issueIndex = idx;
-                    textInput.placeholder = `Issue ${idx + 1}`;
+                    textInput.dataset.planoDeAcaoIndex = idx;
+                    textInput.placeholder = `Plano de Ação ${idx + 1}`;
                 }
                 const removeButton = item.querySelector('button');
                 if (removeButton) {
-                    removeButton.onclick = () => chorinhoApp.removeIssue(idx);
+                    removeButton.onclick = () => chorinhoApp.removePlanoDeAcao(idx);
                 }
                 const checkbox = item.querySelector('input[type="checkbox"]');
                 if (checkbox) {
-                    checkbox.id = `issue-checkbox-${idx}`;
+                    checkbox.id = `plano-de-acao-checkbox-${idx}`;
                 }
             });
         }
@@ -1310,11 +1326,12 @@
             document.getElementById('config-branch').checked = config.fields.branch;
             document.getElementById('config-descricao').checked = config.fields.descricao;
             document.getElementById('config-objetivo').checked = config.fields.objetivo;
-            document.getElementById('config-issuesEnabled').checked = config.fields.issuesEnabled;
+            document.getElementById('config-planoDeAcaoEnabled').checked = config.fields.planoDeAcaoEnabled;
             document.getElementById('config-solucao').checked = config.fields.solucao;
             document.getElementById('config-modificacoes').checked = config.fields.modificacoes;
             document.getElementById('config-fluxo').checked = config.fields.fluxo;
             document.getElementById('config-comandos').checked = config.fields.comandos;
+            document.getElementById('config-problemasEncontrados').checked = config.fields.problemasEncontrados;
             document.getElementById('config-observacoes').checked = config.fields.observacoes;
             document.getElementById('config-navegacao').checked = config.fields.navegacao;
             document.getElementById('config-darkMode').checked = config.fields.darkMode;
@@ -1342,11 +1359,12 @@
             document.getElementById('chorinho-fluxo').value = '';
             document.getElementById('chorinho-navegacao').value = '';
             document.getElementById('chorinho-comandos').value = '';
+            document.getElementById('chorinho-problemas-encontrados').value = '';
             document.getElementById('chorinho-observacoes').value = '';
 
-            const issuesContainer = document.getElementById('chorinho-issues-container');
-            issuesContainer.innerHTML = '';
-            this.addIssueElement(0); // Add one empty issue
+            const container = document.getElementById('chorinho-plano-de-acao-container');
+            container.innerHTML = '';
+            this.addPlanoDeAcaoElement(0); // Add one empty plano de acao
         }
 
         applyFieldsVisibility() {
@@ -1360,11 +1378,12 @@
                 branch: 'Branch',
                 descricao: 'Descrição',
                 objetivo: 'Objetivo',
-                issuesEnabled: 'Issues',
+                planoDeAcaoEnabled: 'Plano de Ação',
                 solucao: 'Solução Implementada',
                 modificacoes: 'Modificações',
                 fluxo: 'Fluxo de teste na UI',
                 comandos: 'Comandos para testes BANCO DE DADOS',
+                problemasEncontrados: 'Problemas encontrados',
                 observacoes: 'Observações/Notas',
                 navegacao: 'Navegação na UI'
             };
@@ -1377,7 +1396,7 @@
                     let isVisible = config.fields[field] === undefined ? true : config.fields[field];
 
                     // Handle dependencies
-                    if (field === 'objetivo' || field === 'issuesEnabled') {
+                    if (field === 'objetivo' || field === 'planoDeAcaoEnabled') {
                         if (!config.fields.descricao) {
                             isVisible = false;
                         }
@@ -1387,8 +1406,8 @@
 
                     if (!isVisible) {
                         let fieldValue = data[field];
-                        if (field === 'issuesEnabled') {
-                            fieldValue = data.issues;
+                        if (field === 'planoDeAcaoEnabled') {
+                            fieldValue = data.planoDeAcao;
                         }
 
                         if (fieldValue && fieldValue.length > 0) {
@@ -1426,18 +1445,18 @@
             this.ui = new ChorinhoUI();
         }
 
-        addIssue() {
-            const container = document.getElementById('chorinho-issues-container');
-            const currentCount = container.querySelectorAll('.chorinho-issue-item').length;
-            this.ui.addIssueElement(currentCount);
+        addPlanoDeAcao() {
+            const container = document.getElementById('chorinho-plano-de-acao-container');
+            const currentCount = container.querySelectorAll('.chorinho-plano-de-acao-item').length;
+            this.ui.addPlanoDeAcaoElement(currentCount);
         }
 
-        removeIssue(index) {
-            const container = document.getElementById('chorinho-issues-container');
-            const items = container.querySelectorAll('.chorinho-issue-item');
+        removePlanoDeAcao(index) {
+            const container = document.getElementById('chorinho-plano-de-acao-container');
+            const items = container.querySelectorAll('.chorinho-plano-de-acao-item');
             if (items.length > 1) {
                 items[index].remove();
-                this.ui.reindexIssues();
+                this.ui.reindexPlanoDeAcao();
             }
         }
 
@@ -1525,11 +1544,12 @@
                     branch: document.getElementById('config-branch').checked,
                     descricao: document.getElementById('config-descricao').checked,
                     objetivo: document.getElementById('config-objetivo').checked,
-                    issuesEnabled: document.getElementById('config-issuesEnabled').checked,
+                    planoDeAcaoEnabled: document.getElementById('config-planoDeAcaoEnabled').checked,
                     solucao: document.getElementById('config-solucao').checked,
                     modificacoes: document.getElementById('config-modificacoes').checked,
                     fluxo: document.getElementById('config-fluxo').checked,
                     comandos: document.getElementById('config-comandos').checked,
+                    problemasEncontrados: document.getElementById('config-problemasEncontrados').checked,
                     observacoes: document.getElementById('config-observacoes').checked,
                     navegacao: document.getElementById('config-navegacao').checked,
                     darkMode: document.getElementById('config-darkMode').checked
@@ -1539,7 +1559,7 @@
             Storage.saveConfig(config);
             this.ui.applyFieldsVisibility();
             this.ui.applyDarkMode();
-            this.ui.refreshIssuesUI();
+            this.ui.refreshPlanoDeAcaoUI();
             this.ui.showAlert('Configurações salvas com sucesso!', 'success');
         }
 
