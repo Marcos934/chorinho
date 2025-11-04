@@ -55,12 +55,13 @@ Esta é a aba principal, onde você irá criar a documentação da sua CHORE.
 *   **Merge Request:** O link para o Merge Request (MR) da tarefa.
 *   **Branch:** O nome da branch da tarefa, gerado automaticamente. Você pode copiar o nome da branch clicando no botão **"Copiar"**.
 *   **Objetivo:** O objetivo da tarefa.
-*   **Issues:** As issues relacionadas à tarefa. Você pode adicionar ou remover issues conforme necessário.
+*   **Plano de Ação:** Os planos de ação relacionados à tarefa. Você pode adicionar ou remover planos de ação conforme necessário.
 *   **Solução Implementada:** A descrição da solução que foi implementada.
 *   **Modificações:** As modificações que foram feitas no código.
 *   **Fluxo de teste na UI:** O fluxo de teste a ser seguido na interface do usuário.
 *   **Navegação na UI:** A navegação a ser seguida na interface do usuário.
 *   **Comandos para testes BANCO DE DADOS:** Comandos de banco de dados a serem executados para teste.
+*   **Problemas encontrados:** Quaisquer problemas ou impedimentos encontrados durante a execução da tarefa.
 *   **Observações/Notas:** Qualquer observação ou nota adicional.
 
 No final do formulário, você encontrará os seguintes botões:
