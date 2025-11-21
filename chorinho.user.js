@@ -13,7 +13,6 @@
 (function () {
     'use strict';
 
-    // ==================== ÍCONES SVG ====================
     const Icons = {
         music: '<svg width="24" height="24" viewBox="0 0 16 16" fill="currentColor"><path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707zm-2.121-2.121A4.987 4.987 0 0 0 11.025 8a4.987 4.987 0 0 0-1.61-3.889l-.708.707A3.989 3.989 0 0 1 10.025 8a3.989 3.989 0 0 1-1.318 2.982l.708.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/></svg>',
         close: '<svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z"/></svg>',
@@ -38,10 +37,9 @@
         starFill: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>',
         duplicate: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>',
         sort: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/><path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/></svg>',
-        search: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>'
-    };
+        search: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>' 
+   };
 
-    // ==================== ESTILOS ====================
     const styles = `
         h3 {
             color: dimgrey;
@@ -64,13 +62,11 @@
             transition: all 0.3s ease;
             color: white;
         }
-
         .chorinho-float-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
             background: #1a1e22;
         }
-
         .chorinho-panel {
             position: fixed;
             top: 0;
@@ -84,11 +80,9 @@
             overflow-y: auto;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
-
         .chorinho-panel.open {
             right: 0;
         }
-
         .chorinho-header {
             background: #24292e;
             color: white;
@@ -101,13 +95,11 @@
             z-index: 10;
             border-bottom: 1px solid #e1e4e8;
         }
-
         .chorinho-header h2 {
             margin: 0;
             font-size: 24px;
             flex-grow: 1;
         }
-
         .chorinho-close {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -121,19 +113,15 @@
             justify-content: center;
             transition: background 0.2s;
         }
-
         .chorinho-close:hover {
             background: rgba(255, 255, 255, 0.2);
         }
-
         .chorinho-content {
             padding: 20px;
         }
-
         .chorinho-section {
             margin-bottom: 20px;
         }
-
         .chorinho-section label {
             display: block;
             margin-bottom: 8px;
@@ -141,7 +129,6 @@
             color: #333;
             font-size: 14px;
         }
-
         .chorinho-panel .chorinho-input,
         .chorinho-panel .chorinho-textarea {
             width: 100%;
@@ -154,41 +141,34 @@
             box-sizing: border-box;
             color: #333;
         }
-
         .chorinho-panel .chorinho-textarea {
             min-height: 80px;
             resize: vertical;
         }
-
         .chorinho-checkbox-group {
             display: flex;
             flex-direction: column;
             gap: 10px;
             margin-top: 10px;
         }
-
         .chorinho-checkbox-item {
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
         .chorinho-checkbox-item input[type="checkbox"] {
             width: 18px;
             height: 18px;
             cursor: pointer;
         }
-
         .chorinho-checkbox-item label {
             margin: 0;
             font-weight: normal;
             cursor: pointer;
         }
-
         .chorinho-config-subgroup {
             padding-left: 20px;
         }
-
         .chorinho-btn {
             background: #24292e;
             color: white;
@@ -206,72 +186,58 @@
             gap: 1px;
             margin-top: 10px;
         }
-
         .chorinho-btn:hover {
             background: #1a1e22;
         }
-
         .chorinho-btn-secondary {
             background: #fafbfc;
             color: #24292e;
         }
-
         .chorinho-btn-secondary:hover {
             background: #f3f4f6;
         }
-
         .chorinho-btn-success {
             background: #2ea44f;
             border-color: rgba(27, 31, 35, 0.15);
         }
-
         .chorinho-btn-success:hover {
             background: #2c974b;
         }
-
         .chorinho-btn-danger {
             background: #d73a49;
             border-color: rgba(27, 31, 35, 0.15);
         }
-
         .chorinho-btn-danger:hover {
             background: #cb2431;
         }
-
         .chorinho-btn-small {
             padding: 6px 12px;
             font-size: 12px;
         }
-
         .chorinho-plano-de-acao-container {
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             padding: 15px;
             margin-top: 10px;
         }
-
         .chorinho-plano-de-acao-item {
             display: flex;
             gap: 10px;
             margin-bottom: 10px;
             align-items: center;
         }
-
         .chorinho-issue-item input[type="text"] {
             flex: 1;
         }
-
         .chorinho-issue-item .chorinho-plano-de-acao-checkbox {
             margin-right: 5px;
         }
-
         .chorinho-tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             border-bottom: 2px solid #e0e0e0;
         }
-
         .chorinho-tab {
             padding: 10px 20px;
             background: none;
@@ -283,20 +249,16 @@
             color: #666;
             transition: all 0.2s;
         }
-
         .chorinho-tab.active {
             color: #24292e;
             border-bottom-color: #f9826c;
         }
-
         .chorinho-tab-content {
             display: none;
         }
-
         .chorinho-tab-content.active {
             display: block;
         }
-
         .chorinho-history-item {
             background: #f6f8fa;
             padding: 15px;
@@ -305,61 +267,51 @@
             border: 1px solid #e1e4e8;
             border-left: 3px solid #0366d6;
         }
-
         .chorinho-history-item h4 {
             margin: 0 0 10px 0;
             color: #333;
         }
-
         .chorinho-history-item p {
             margin: 0 0 10px 0;
             color: #666;
             font-size: 12px;
         }
-
         .chorinho-preview {
             background: #f8f9fa;
             padding: 20px;
             border-radius: 8px;
             border: 2px solid #e0e0e0;
         }
-
         .chorinho-preview h2 {
             color: #24292e;
             border-bottom: 1px solid #e1e4e8;
             padding-bottom: 8px;
             margin-top: 20px;
         }
-
         .chorinho-preview h2:first-child {
             margin-top: 0;
         }
-
         .chorinho-alert {
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 15px;
             font-size: 14px;
         }
-
         .chorinho-alert-success {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-
         .chorinho-alert-error {
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-
         .chorinho-alert-warning {
             background: #fff3cd;
             color: #856404;
             border: 1px solid #ffeeba;
         }
-
         .chorinho-badge {
             display: inline-block;
             padding: 4px 8px;
@@ -370,13 +322,11 @@
             font-weight: 600;
             margin-left: 8px;
         }
-
         .chorinho-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
         }
-
         .chorinho-static-field {
             width: 100%;
             padding: 10px;
@@ -391,7 +341,6 @@
             display: flex;
             align-items: center;
         }
-
         #chorinho-alert-container {
             position: absolute;
             top: 10px;
@@ -399,19 +348,16 @@
             width: 300px;
             z-index: 99999999;
         }
-
         .chorinho-drag-handle {
             cursor: grab;
             color: #586069;
             margin-left: 8px;
         }
-
         .chorinho-sortable-ghost {
             opacity: 0.4;
             background: #f0f0f0;
         }
-
-        /* Labels */
+        
         .chorinho-label {
             display: inline-block;
             padding: 3px 10px;
@@ -510,7 +456,7 @@
         }
 
         .chorinho-filters-row .chorinho-input {
-            margin: 0; /* Remove margens padrão */
+            margin: 0; 
         }
 
         .chorinho-search-wrapper {
@@ -520,7 +466,7 @@
 
         .chorinho-search-wrapper input {
             width: 100%;
-            padding-left: 32px !important; /* Espaço para o ícone */
+            padding-left: 32px !important; 
         }
 
         .chorinho-search-icon {
@@ -543,7 +489,7 @@
             align-items: center;
         }
 
-        /* Toggle Buttons (Checkboxes estilizados) */
+        
         .chorinho-toggle-btn {
             display: inline-flex;
             align-items: center;
@@ -566,7 +512,7 @@
         }
 
         .chorinho-toggle-btn.active {
-            background: #e1f0ff; /* Azul bem claro */
+            background: #e1f0ff; 
             color: #0366d6;
             border-color: #0366d6;
         }
@@ -646,8 +592,7 @@
             text-transform: uppercase;
             margin-left: 10px;
         }
-
-        /* Dark Mode */
+        
         .chorinho-panel.dark-mode {
             background: #2d333b;
             color: #c9d1d9;
@@ -702,20 +647,153 @@
         }
         .chorinho-panel.dark-mode .chorinho-label-item,
         .chorinho-panel.dark-mode .chorinho-stats {
-            background: #1c2128;
+            background: transparent; 
+            border: none; 
+            padding: 0;
         }
+        
+        .chorinho-panel.dark-mode .chorinho-stat {
+            background: #1c2128;
+            border-color: #444c56;
+        }
+        
+        .chorinho-panel.dark-mode .chorinho-stat-header {
+            color: #8b949e;
+        }
+        
         .chorinho-panel.dark-mode .chorinho-stat-value {
             color: #c9d1d9;
         }
+        
+        .chorinho-panel.dark-mode .chorinho-history-header {
+            background: #1c2128;
+            border-color: #444c56;
+        }
+        
+        .chorinho-panel.dark-mode .chorinho-toggle-btn {
+            background: #1c2128;
+            border-color: #444c56;
+            color: #c9d1d9;
+        }
+        
+        .chorinho-panel.dark-mode .chorinho-toggle-btn:hover {
+            background: #2d333b;
+            border-color: #768390;
+        }
+        
+        .chorinho-panel.dark-mode .chorinho-toggle-btn.active {
+            background: rgba(56, 139, 253, 0.15);
+            color: #58a6ff;
+            border-color: #58a6ff;
+        }
+        
+        .chorinho-panel.dark-mode .chorinho-search-icon {
+            color: #8b949e;
+        }
+
+        
+        .chorinho-modal-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chorinho-modal-overlay.open {
+            display: flex;
+        }
+
+        .chorinho-modal {
+            background: white;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chorinho-panel.dark-mode .chorinho-modal {
+            background: #2d333b;
+            border: 1px solid #444c56;
+        }
+
+        .chorinho-modal-header {
+            padding: 15px;
+            border-bottom: 1px solid #e1e4e8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .chorinho-panel.dark-mode .chorinho-modal-header {
+            border-bottom-color: #444c56;
+            color: #c9d1d9;
+        }
+
+        .chorinho-modal-body {
+            padding: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .chorinho-modal-footer {
+            padding: 15px;
+            border-top: 1px solid #e1e4e8;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .chorinho-panel.dark-mode .chorinho-modal-footer {
+            border-top-color: #444c56;
+        }
+
+        .chorinho-label-option {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+            margin-bottom: 4px;
+        }
+
+        .chorinho-label-option:hover {
+            background: #f6f8fa;
+        }
+
+        .chorinho-panel.dark-mode .chorinho-label-option:hover {
+            background: #1c2128;
+        }
+
+        .chorinho-label-option input {
+            margin-right: 10px;
+        }
+
+        .chorinho-label-option span {
+            padding: 2px 8px;
+            border-radius: 10px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+        }
     `;
 
-    // ==================== UTILITÁRIOS ====================
     const Utils = {
-        // Remove acentos e caracteres especiais
+        
         slugify(text) {
             return text
                 .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[̀-ͯ]/g, '')
                 .replace(/[^a-zA-Z0-9\s-]/g, '')
                 .trim()
                 .replace(/\s+/g, '-')
@@ -727,7 +805,7 @@
             return text.replace(/\//g, '-').replace(/[\\?%*:|"<>]/g, '');
         },
 
-        // Extrai número da task
+        
         extractTaskNumber() {
             try {
                 const selector = "#task-show-modal .sc-kzGZOW.sc-OSwEw.fEAbVr.fZkMcP > span";
@@ -743,7 +821,7 @@
             return '';
         },
 
-        // Extrai título da task
+        
         extractTaskTitle() {
             try {
                 const selector = "#task-show-modal span span";
@@ -755,18 +833,18 @@
             return '';
         },
 
-        // Verifica se modal está aberto
+        
         isTaskModalOpen() {
             return document.querySelector("#modal-container") !== null;
         },
 
-        // Gera nome de branch
+        
         generateBranchName(number, title) {
             const slugTitle = this.slugify(title);
             return `Feature-${number}-${slugTitle}`;
         },
 
-        // Copia para clipboard
+        
         copyToClipboard(text) {
             const textarea = document.createElement('textarea');
             textarea.value = text;
@@ -778,7 +856,7 @@
             document.body.removeChild(textarea);
         },
 
-        // Download arquivo
+        
         downloadFile(content, filename) {
             const blob = new Blob([content], { type: 'text/markdown' });
             const url = URL.createObjectURL(blob);
@@ -789,13 +867,12 @@
             URL.revokeObjectURL(url);
         },
 
-        // Formata data
+        
         formatDate(date) {
             return new Date(date).toLocaleString('pt-BR');
         }
     };
 
-    // ==================== STORAGE ====================
     const Storage = {
         KEYS: {
             CHORINHOS: 'chorinho_saved',
@@ -833,10 +910,10 @@
 
             const existingIndex = chorinhos.findIndex(c => c.taskNumber === chorinho.taskNumber);
             if (existingIndex >= 0) {
-                chorinho.id = chorinhos[existingIndex].id; // Preserve existing ID
+                chorinho.id = chorinhos[existingIndex].id; 
                 chorinhos[existingIndex] = chorinho;
             } else {
-                chorinho.id = Date.now().toString(); // Assign new ID
+                chorinho.id = Date.now().toString(); 
                 chorinhos.unshift(chorinho);
             }
 
@@ -890,7 +967,6 @@
         }
     };
 
-    // ==================== TEMPLATE ====================
     const TemplateGenerator = {
         generate(data, config) {
             let template = '';
@@ -952,7 +1028,6 @@
         }
     };
 
-    // ==================== UI ====================
     class ChorinhoUI {
         constructor() {
             this.isOpen = false;
@@ -1007,7 +1082,7 @@
                     </div>
                     <div id="chorinho-hidden-fields-warning" class="chorinho-alert chorinho-alert-warning" style="display: none;"></div>
 
-                    <!-- Formulário -->
+                    
                     <div class="chorinho-tab-content active" data-content="form">
                         <div id="chorinho-no-task-warning" class="chorinho-alert chorinho-alert-warning" style="display: none;">O formulário está desabilitado pois não foi possível obter o número da task.</div>
                         <div class="chorinho-section">
@@ -1038,10 +1113,10 @@
                         <div class="chorinho-section">
                             <label>${Icons.tag} Labels</label>
                             <div id="chorinho-labels-selector" class="chorinho-checkbox-group">
-                                <!-- Labels serão inseridas dinamicamente -->
+                                
                             </div>
                             <div id="chorinho-selected-labels" class="chorinho-labels-container" style="margin-top: 10px;">
-                                <!-- Badges das labels selecionadas -->
+                                
                             </div>
                         </div>
 
@@ -1107,7 +1182,7 @@
                         </div>
                     </div>
 
-                    <!-- Preview -->
+                    
                     <div class="chorinho-tab-content" data-content="preview">
                         <div class="chorinho-section">
                             <h3>Preview do Markdown</h3>
@@ -1115,9 +1190,9 @@
                         </div>
                     </div>
 
-                    <!-- Histórico -->
+                    
                     <div class="chorinho-tab-content" data-content="history">
-                        <!-- Estatísticas -->
+                        
                         <div class="chorinho-stats" id="chorinho-stats">
                             <div class="chorinho-stat total">
                                 <div class="chorinho-stat-header">${Icons.document} Total</div>
@@ -1133,7 +1208,7 @@
                             </div>
                         </div>
 
-                        <!-- Filtros -->
+                        
                         <div class="chorinho-history-header">
                             <div class="chorinho-filters-row">
                                 <div class="chorinho-search-wrapper">
@@ -1172,7 +1247,7 @@
                         </div>
                     </div>
 
-                    <!-- Configurações -->
+                    
                     <div class="chorinho-tab-content" data-content="config">
                         <div class="chorinho-section">
                             <label>Campos Visíveis no Template</label>
@@ -1238,25 +1313,42 @@
                             </div>
                         </div>
 
-                        <!-- Gerenciamento de Labels -->
+                        
                         <div class="chorinho-label-manager">
                             <label><h3>${Icons.tag} Gerenciar Labels Personalizadas</h3></label>
 
-                            <!-- Criar nova label -->
+                            
                             <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
                                 <input type="text" class="chorinho-input" id="chorinho-new-label-name" placeholder="Nome da label" style="flex: 1;">
                                 <input type="color" class="chorinho-color-picker" id="chorinho-new-label-color" value="#3498db">
                                 <button class="chorinho-btn chorinho-btn-success" onclick="chorinhoApp.createLabel()">${Icons.plus} Criar</button>
                             </div>
 
-                            <!-- Lista de labels -->
+                            
                             <div id="chorinho-labels-list">
-                                <!-- Labels serão inseridas dinamicamente -->
+                                
                             </div>
                         </div>
 
                         <div class="chorinho-section">
                             <button class="chorinho-btn" onclick="chorinhoApp.saveConfig()">${Icons.save} &nbsp;Salvar Configurações</button>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="chorinho-modal-overlay" id="chorinho-labels-modal">
+                    <div class="chorinho-modal">
+                        <div class="chorinho-modal-header">
+                            <span>Gerenciar Labels</span>
+                            <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" id="chorinho-labels-modal-close">${Icons.close}</button>
+                        </div>
+                        <div class="chorinho-modal-body" id="chorinho-labels-modal-body">
+                            
+                        </div>
+                        <div class="chorinho-modal-footer">
+                            <button class="chorinho-btn" id="chorinho-labels-modal-cancel">Cancelar</button>
+                            <button class="chorinho-btn chorinho-btn-primary" id="chorinho-labels-modal-save">Salvar</button>
                         </div>
                     </div>
                 </div>
@@ -1266,37 +1358,55 @@
         }
 
         setupEventListeners() {
-            // Fechar painel
+            
             this.panel.querySelector('.chorinho-close').onclick = () => this.closePanel();
 
-            // Tabs
+            
             this.panel.querySelectorAll('.chorinho-tab').forEach(tab => {
                 tab.onclick = () => this.switchTab(tab.dataset.tab);
             });
 
-            // Auto-save current data
+            
             this.panel.querySelectorAll('input, textarea').forEach(input => {
                 input.addEventListener('change', () => this.autoSaveCurrentData());
             });
 
-            // Import file
+            
             document.getElementById('chorinho-import-file').addEventListener('change', (e) => {
                 window.chorinhoApp.handleImportFile(e);
             });
 
-            // History search
+            
             document.getElementById('chorinho-history-search').addEventListener('input', () => {
                 this.renderHistory();
             });
 
-            // Copy branch button
+            
             document.getElementById('chorinho-copy-branch-btn').addEventListener('click', () => {
                 const branchName = document.getElementById('chorinho-branch').value;
                 Utils.copyToClipboard(branchName);
                 this.showAlert('Nome da branch copiado para o clipboard!', 'success');
             });
+            
+            
+            const labelsListContainer = document.getElementById('chorinho-labels-list');
+            if (labelsListContainer) {
+                labelsListContainer.addEventListener('click', (event) => {
+                    const button = event.target.closest('button');
+                    if (!button) return;
 
-            // Config dependencies
+                    const action = button.dataset.action;
+                    const labelId = button.dataset.labelId;
+
+                    if (action === 'update') {
+                        chorinhoApp.updateLabel(labelId);
+                    } else if (action === 'delete') {
+                        chorinhoApp.deleteLabel(labelId);
+                    }
+                });
+            }
+
+            
             const configDescricao = document.getElementById('config-descricao');
             const subGroupDescricao = configDescricao.closest('.chorinho-checkbox-item').nextElementSibling;
             const configPlanoDeAcaoEnabled = document.getElementById('config-planoDeAcaoEnabled');
@@ -1316,7 +1426,7 @@
                 toggleSubGroup(configPlanoDeAcaoEnabled, subGroupPlanoDeAcao);
             });
 
-            // Set initial state when config tab is switched to
+            
             const configTab = this.panel.querySelector('.chorinho-tab[data-tab="config"]');
             configTab.addEventListener('click', () => {
                 toggleSubGroup(configDescricao, subGroupDescricao);
@@ -1328,7 +1438,7 @@
                 this.autoSaveCurrentData();
             });
 
-            // History filters and archive toggle
+            
             document.getElementById('chorinho-label-filter').addEventListener('change', () => {
                 this.renderHistory();
             });
@@ -1344,6 +1454,28 @@
             document.getElementById('chorinho-show-archived').addEventListener('change', () => {
                 this.renderHistory();
             });
+
+            
+            const labelModal = document.getElementById('chorinho-labels-modal');
+            if (labelModal) {
+                const labelModalSaveBtn = document.getElementById('chorinho-labels-modal-save');
+                const labelModalCloseBtn = document.getElementById('chorinho-labels-modal-close');
+                const labelModalCancelBtn = document.getElementById('chorinho-labels-modal-cancel');
+
+                labelModalSaveBtn.addEventListener('click', () => {
+                    const chorinhoId = labelModal.dataset.chorinhoId;
+                    if (!chorinhoId) return;
+
+                    const body = document.getElementById('chorinho-labels-modal-body');
+                    const selectedLabels = Array.from(body.querySelectorAll('input:checked')).map(input => input.value);
+                    
+                    chorinhoApp.saveChorinhoLabels(chorinhoId, selectedLabels);
+                    this.closeLabelSelectorModal();
+                });
+
+                labelModalCloseBtn.addEventListener('click', () => this.closeLabelSelectorModal());
+                labelModalCancelBtn.addEventListener('click', () => this.closeLabelSelectorModal());
+            }
         }
 
         togglePanel() {
@@ -1358,7 +1490,7 @@
             this.panel.classList.add('open');
             this.isOpen = true;
             this.checkModalState();
-            this.applyFieldsVisibility(); // Apply field visibility when panel opens
+            this.applyFieldsVisibility(); 
         }
 
         closePanel() {
@@ -1369,12 +1501,12 @@
         switchTab(tabName) {
             this.currentTab = tabName;
 
-            // Atualizar tabs
+            
             this.panel.querySelectorAll('.chorinho-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.tab === tabName);
             });
 
-            // Atualizar conteúdo
+            
             this.panel.querySelectorAll('.chorinho-tab-content').forEach(content => {
                 content.classList.toggle('active', content.dataset.content === tabName);
             });
@@ -1391,19 +1523,19 @@
                 }
             }
 
-            // Atualizar histórico se necessário
+            
             if (tabName === 'history') {
                 this.renderHistory();
                 this.populateLabelFilter();
             }
 
-            // Carregar config se necessário
+            
             if (tabName === 'config') {
                 this.loadConfig();
                 this.renderLabelsManager();
             }
 
-            // Renderizar labels selector no formulário
+            
             if (tabName === 'form') {
                 this.renderLabelsSelector();
             }
@@ -1433,10 +1565,12 @@
             const taskDisplay = document.getElementById('chorinho-task-display');
 
             if (!taskNumber) {
-                this.setFormEnabled(false);
+                this.setFormEnabled(false); 
                 this.clearForm();
-                taskDisplay.innerText = 'Nenhuma task aberta no modal.';
-                return;
+                taskDisplay.innerText = 'Nenhuma task do Runrun.it detectada. Crie uma chorinho manualmente.'; 
+                this.currentTaskNumber = ''; 
+                this.currentTaskTitle = '';   
+                return; 
             }
 
             this.setFormEnabled(true);
@@ -1459,16 +1593,16 @@
                 document.getElementById('chorinho-branch').value = branchName;
             }
 
-            // Carregar dados salvos se existirem
+            
             const savedChorinhos = Storage.getSavedChorinhos();
             const taskData = savedChorinhos.find(c => c.taskNumber === taskNumber);
 
             if (taskData) {
                 this.loadFormData(taskData);
             } else {
-                this.clearForm(); // Limpa o formulário se não houver dados salvos
-                this.applyFieldsVisibility(); // Aplica a visibilidade dos campos
-                // Preenche o nome da branch mesmo para novas tasks
+                this.clearForm(); 
+                this.applyFieldsVisibility(); 
+                
                 if (taskNumber && taskTitle) {
                     const branchName = Utils.generateBranchName(taskNumber, taskTitle);
                     document.getElementById('chorinho-branch').value = branchName;
@@ -1489,7 +1623,7 @@
             document.getElementById('chorinho-observacoes').value = data.observacoes || '';
             document.getElementById('chorinho-plano-de-acao-checkboxes').checked = data.planoDeAcaoCheckboxes || false;
 
-            // Carregar plano de acao
+            
             const container = document.getElementById('chorinho-plano-de-acao-container');
             container.innerHTML = '';
             if (data.planoDeAcao && data.planoDeAcao.length > 0) {
@@ -1499,6 +1633,10 @@
             } else {
                 this.addPlanoDeAcaoElement(0);
             }
+
+            
+            this.currentChorinho = data;
+            this.renderLabelsSelector();
 
             this.applyFieldsVisibility();
         }
@@ -1529,7 +1667,7 @@
                 taskNumber = match[1].replace('#', '');
                 taskTitle = match[2];
             } else {
-                // Fallback if format is just number or just title
+                
                 taskNumber = taskDisplay.match(/#(\d+)/) ? taskDisplay.match(/#(\d+)/)[1] : '';
                 taskTitle = taskDisplay;
             }
@@ -1576,7 +1714,7 @@
             const showCheckboxes = document.getElementById('chorinho-plano-de-acao-checkboxes').checked;
 
             const isChecked = value.startsWith('[x] ');
-            const textValue = value.replace(/\[[x ]\]\s*/, '');
+            const textValue = value.replace(/[[x ]]\s*/, '');
 
             planoDeAcaoDiv.innerHTML = `
                 ${showCheckboxes ? `<input type="checkbox" class="chorinho-plano-de-acao-checkbox" id="plano-de-acao-checkbox-${index}" ${isChecked ? 'checked' : ''}>` : ''}
@@ -1668,19 +1806,19 @@
             const labelFilter = document.getElementById('chorinho-label-filter').value;
             const config = Storage.getConfig();
 
-            // Update stats
+            
             const totalActive = allChorinhos.filter(c => !c.archived).length;
             const totalArchived = allChorinhos.filter(c => c.archived).length;
             document.getElementById('stat-total').textContent = allChorinhos.length;
             document.getElementById('stat-active').textContent = totalActive;
             document.getElementById('stat-archived').textContent = totalArchived;
 
-            // Filter chorinhos
+            
             const showFavorites = document.getElementById('chorinho-show-favorites').checked;
             const showArchived = document.getElementById('chorinho-show-archived').checked;
             const sortOrder = document.getElementById('chorinho-sort-order').value;
 
-            // Sync toggle buttons state
+            
             const btnFavorites = document.getElementById('btn-toggle-favorites');
             const btnArchived = document.getElementById('btn-toggle-archived');
 
@@ -1704,7 +1842,7 @@
                 return matchesSearch && matchesArchived && matchesLabel && matchesFavorite;
             });
 
-            // Sort chorinhos
+            
             filteredChorinhos.sort((a, b) => {
                 switch (sortOrder) {
                     case 'date-asc':
@@ -1788,26 +1926,26 @@
 
             if (!config.labels || config.labels.length === 0) {
                 container.innerHTML = '<p style="color: #999; font-size: 12px;">Nenhuma label disponível. Crie labels nas configurações.</p>';
+                selectedLabelsContainer.innerHTML = ''; 
                 return;
             }
 
+            
             const currentData = this.currentChorinho || {};
             const selectedLabels = currentData.labels || [];
+            selectedLabelsContainer.innerHTML = this.renderLabelsBadges(selectedLabels, config.labels);
 
-            // Render clickable badges instead of checkboxes
-            container.innerHTML = '<div class="chorinho-labels-container">' +
-                config.labels.map(label => {
-                    const isSelected = selectedLabels.includes(label.id);
-                    return `<span
-                        class="chorinho-label-clickable ${isSelected ? 'selected' : ''}"
-                        style="background-color: ${label.color}; color: white;"
-                        data-label-id="${label.id}"
-                        onclick="chorinhoApp.ui.toggleLabelSelection('${label.id}')"
-                    >${label.name}</span>`;
-                }).join('') +
-                '</div>';
+            
+            container.innerHTML = `
+                <button type="button" class="chorinho-btn chorinho-btn-sm" id="chorinho-open-labels-modal-btn">${Icons.tag} Selecionar Labels</button>
+            `;
 
-            this.updateSelectedLabelsBadges();
+            
+            document.getElementById('chorinho-open-labels-modal-btn').onclick = () => {
+                const chorinhoId = this.currentChorinho ? this.currentChorinho.id : null;
+                const initialSelectedLabels = this.currentChorinho ? this.currentChorinho.labels : [];
+                chorinhoApp.ui.showLabelSelectorModal(chorinhoId, initialSelectedLabels);
+            };
         }
 
         toggleLabelSelection(labelId) {
@@ -1850,8 +1988,8 @@
                     <span class="chorinho-label-preview" style="background-color: ${label.color};">${label.name}</span>
                     <input type="text" class="chorinho-input" value="${label.name}" id="edit-label-name-${label.id}" style="flex: 1;">
                     <input type="color" class="chorinho-color-picker" value="${label.color}" id="edit-label-color-${label.id}">
-                    <button class="chorinho-btn chorinho-btn-small" onclick="chorinhoApp.updateLabel('${label.id}')">${Icons.edit} Salvar</button>
-                    <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" onclick="chorinhoApp.deleteLabel('${label.id}')">${Icons.trash}</button>
+                    <button class="chorinho-btn chorinho-btn-small" data-action="update" data-label-id="${label.id}">${Icons.edit} Salvar</button>
+                    <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" data-action="delete" data-label-id="${label.id}">${Icons.trash}</button>
                 </div>
             `).join('');
         }
@@ -1901,12 +2039,12 @@
 
             const container = document.getElementById('chorinho-plano-de-acao-container');
             container.innerHTML = '';
-            this.addPlanoDeAcaoElement(0); // Add one empty plano de acao
+            this.addPlanoDeAcaoElement(0); 
         }
 
         applyFieldsVisibility() {
             const config = Storage.getConfig();
-            const data = this.getFormData(); // Use getFormData to get current values
+            const data = this.getFormData(); 
             const hiddenFieldsWithValue = [];
 
             const fieldDisplayNames = {
@@ -1932,7 +2070,7 @@
                 elements.forEach(el => {
                     let isVisible = config.fields[field] === undefined ? true : config.fields[field];
 
-                    // Handle dependencies
+                    
                     if (field === 'objetivo' || field === 'planoDeAcaoEnabled') {
                         if (!config.fields.descricao) {
                             isVisible = false;
@@ -1991,14 +2129,45 @@
                     btn.classList.remove('active');
                 }
 
-                // Dispara evento change manualmente para atualizar a lista
+                
                 const event = new Event('change');
                 checkbox.dispatchEvent(event);
             }
         }
+
+        showLabelSelectorModal(chorinhoId, currentLabels = []) {
+            const modal = document.getElementById('chorinho-labels-modal');
+            const body = document.getElementById('chorinho-labels-modal-body');
+            const config = Storage.getConfig();
+
+            if (!config.labels || config.labels.length === 0) {
+                alert('Nenhuma label disponível. Crie labels nas configurações primeiro.');
+                return;
+            }
+
+            modal.dataset.chorinhoId = chorinhoId; 
+
+            body.innerHTML = '';
+            config.labels.forEach(label => {
+                const isChecked = currentLabels.includes(label.id);
+                const option = document.createElement('label');
+                option.className = 'chorinho-label-option';
+                option.innerHTML = `
+                    <input type="checkbox" value="${label.id}" ${isChecked ? 'checked' : ''}>
+                    <span style="background-color: ${label.color}">${label.name}</span>
+                `;
+                body.appendChild(option);
+            });
+
+            modal.classList.add('open');
+        }
+
+        closeLabelSelectorModal() {
+            const modal = document.getElementById('chorinho-labels-modal');
+            modal.classList.remove('open');
+        }
     }
 
-    // ==================== APP ====================
     class ChorinhoApp {
         constructor() {
             this.ui = new ChorinhoUI();
@@ -2095,8 +2264,42 @@
             this.ui.showAlert('Arquivo .md baixado com sucesso!', 'success');
         }
 
+        editChorinhoLabels(chorinhoId) {
+            const chorinhos = Storage.getSavedChorinhos();
+            const chorinho = chorinhos.find(c => c.id === chorinhoId);
+            if (chorinho) {
+                this.ui.showLabelSelectorModal(chorinhoId, chorinho.labels || []);
+            }
+        }
+
+        saveChorinhoLabels(chorinhoId, newLabels) {
+            if (chorinhoId) { 
+                const chorinhos = Storage.getSavedChorinhos();
+                const chorinhoIndex = chorinhos.findIndex(c => c.id === chorinhoId);
+
+                if (chorinhoIndex >= 0) {
+                    chorinhos[chorinhoIndex].labels = newLabels;
+                    Storage.set(Storage.KEYS.CHORINHOS, chorinhos);
+                    this.ui.renderHistory();
+                    this.ui.showAlert('Labels atualizadas com sucesso!', 'success');
+                }
+            } else { 
+                if (this.ui.currentChorinho) {
+                    this.ui.currentChorinho.labels = newLabels;
+                    this.ui.showAlert('Labels selecionadas para o formulário!', 'success');
+                } else {
+                    
+                    
+                    this.ui.showAlert('Erro: Não foi possível aplicar as labels. Nenhum CHORINHO ativo no formulário.', 'error');
+                }
+            }
+            this.ui.renderLabelsSelector(); 
+        }
+
         saveConfig() {
+            const currentConfig = Storage.getConfig();
             const config = {
+                ...currentConfig,
                 fields: {
                     sistema: document.getElementById('config-sistema').checked,
                     mr: document.getElementById('config-mr').checked,
@@ -2149,19 +2352,19 @@
                     const currentChorinhos = Storage.getSavedChorinhos();
 
                     importedChorinhos.forEach(importedChorinho => {
-                        // Validar se o chorinho importado tem os campos mínimos
+                        
                         if (!importedChorinho.taskNumber || !importedChorinho.id) {
                             console.warn('Chorinho importado ignorado por falta de taskNumber ou id:', importedChorinho);
-                            return; // Pula para o próximo
+                            return; 
                         }
 
                         const existingIndex = currentChorinhos.findIndex(c => c.id === importedChorinho.id);
 
                         if (existingIndex >= 0) {
-                            // Se já existe, atualiza
+                            
                             currentChorinhos[existingIndex] = importedChorinho;
                         } else {
-                            // Se não existe, adiciona
+                            
                             currentChorinhos.unshift(importedChorinho);
                         }
                     });
@@ -2241,7 +2444,7 @@
             config.labels = config.labels.filter(l => l.id !== labelId);
             Storage.saveConfig(config);
 
-            // Remove label from all chorinhos
+            
             const chorinhos = Storage.getSavedChorinhos();
             chorinhos.forEach(chorinho => {
                 if (chorinho.labels) {
@@ -2252,35 +2455,6 @@
 
             this.ui.renderLabelsManager();
             this.ui.showAlert('Label excluída com sucesso!', 'success');
-        }
-
-        editChorinhoLabels(chorinhoId) {
-            const chorinhos = Storage.getSavedChorinhos();
-            const chorinho = chorinhos.find(c => c.id === chorinhoId);
-            const config = Storage.getConfig();
-
-            if (!chorinho) {
-                this.ui.showAlert('Chorinho não encontrado.', 'error');
-                return;
-            }
-
-            if (!config.labels || config.labels.length === 0) {
-                this.ui.showAlert('Nenhuma label disponível. Crie labels nas configurações primeiro.', 'error');
-                return;
-            }
-
-            // Create a simple prompt with available labels
-            const currentLabels = chorinho.labels || [];
-            const labelsText = config.labels.map(label => {
-                const isSelected = currentLabels.includes(label.id);
-                return `${isSelected ? '☑' : '☐'} ${label.name}`;
-            }).join('\n');
-
-            const message = `Labels atuais:\n${labelsText}\n\nAbra o chorinho para editar as labels.`;
-            alert(message);
-
-            // Open the chorinho for editing
-            this.openChorinho(chorinhoId);
         }
 
         toggleArchive(chorinhoId) {
@@ -2321,8 +2495,8 @@
             newChorinho.id = Date.now().toString();
             newChorinho.savedAt = new Date().toISOString();
             newChorinho.taskTitle = `${newChorinho.taskTitle} (Cópia)`;
-            newChorinho.favorite = false; // Não copiar status de favorito
-            newChorinho.archived = false; // Não copiar status de arquivado
+            newChorinho.favorite = false; 
+            newChorinho.archived = false; 
 
             chorinhos.unshift(newChorinho);
             Storage.set(Storage.KEYS.CHORINHOS, chorinhos);
@@ -2332,14 +2506,14 @@
         }
     }
 
-    // ==================== INICIALIZAÇÃO ====================
-    // Aguardar após o carregamento da página
+    
+    
     function init() {
         window.chorinhoApp = new ChorinhoApp();
         console.log('CHORINHO inicializado com sucesso!');
     }
 
-    // Aguardar DOM estar pronto
+    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
