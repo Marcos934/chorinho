@@ -37,7 +37,8 @@
         star: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/></svg>',
         starFill: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>',
         duplicate: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>',
-        sort: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/><path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/></svg>'
+        sort: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/><path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/></svg>',
+        search: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>'
     };
 
     // ==================== ESTILOS ====================
@@ -493,63 +494,141 @@
 
         .chorinho-history-header {
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .chorinho-history-header input[type="text"],
-        .chorinho-history-header select {
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .chorinho-history-header select {
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
             background: white;
+            padding: 15px;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+        }
+
+        .chorinho-filters-row {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .chorinho-filters-row .chorinho-input {
+            margin: 0; /* Remove margens padrão */
+        }
+
+        .chorinho-search-wrapper {
+            flex: 2;
+            position: relative;
+        }
+
+        .chorinho-search-wrapper input {
+            width: 100%;
+            padding-left: 32px !important; /* Espaço para o ícone */
+        }
+
+        .chorinho-search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6a737d;
+            pointer-events: none;
+        }
+
+        .chorinho-filter-select {
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .chorinho-toggles-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Toggle Buttons (Checkboxes estilizados) */
+        .chorinho-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: 1px solid #e1e4e8;
+            border-radius: 20px;
+            background: white;
+            color: #586069;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .chorinho-toggle-btn:hover {
+            background: #f6f8fa;
+            border-color: #c0c4c8;
+        }
+
+        .chorinho-toggle-btn.active {
+            background: #e1f0ff; /* Azul bem claro */
+            color: #0366d6;
+            border-color: #0366d6;
+        }
+
+        .chorinho-toggle-btn.active svg {
+            fill: currentColor;
+        }
+
+        .chorinho-toggle-btn input {
+            display: none;
         }
 
         .chorinho-stats {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-            padding: 15px;
-            background: #f6f8fa;
-            border: 1px solid #e1e4e8;
-            border-radius: 6px;
-            margin-bottom: 15px;
-            font-size: 14px;
+            margin-bottom: 20px;
         }
 
         .chorinho-stat {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 12px;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 15px;
             background: white;
             border: 1px solid #e1e4e8;
-            border-radius: 6px;
-            flex: 1;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
         }
 
-        .chorinho-stat span:first-child {
-            font-size: 18px;
+        .chorinho-stat::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
         }
 
-        .chorinho-stat-label {
+        .chorinho-stat.total::after { background: #0366d6; }
+        .chorinho-stat.active-stat::after { background: #2ea44f; }
+        .chorinho-stat.archived-stat::after { background: #6a737d; }
+
+        .chorinho-stat-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
             color: #586069;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .chorinho-stat-value {
+            font-size: 24px;
             font-weight: 700;
-            font-size: 18px;
-            color: #0366d6;
-            margin-left: auto;
+            color: #24292e;
+            line-height: 1;
         }
 
         .chorinho-history-item.archived {
@@ -1040,44 +1119,48 @@
                     <div class="chorinho-tab-content" data-content="history">
                         <!-- Estatísticas -->
                         <div class="chorinho-stats" id="chorinho-stats">
-                            <div class="chorinho-stat">
-                                <span>📋</span>
-                                <span class="chorinho-stat-label">Total:</span>
+                            <div class="chorinho-stat total">
+                                <div class="chorinho-stat-header">${Icons.document} Total</div>
                                 <span class="chorinho-stat-value" id="stat-total">0</span>
                             </div>
-                            <div class="chorinho-stat">
-                                <span>✅</span>
-                                <span class="chorinho-stat-label">Ativos:</span>
+                            <div class="chorinho-stat active-stat">
+                                <div class="chorinho-stat-header">${Icons.tag} Ativos</div>
                                 <span class="chorinho-stat-value" id="stat-active">0</span>
                             </div>
-                            <div class="chorinho-stat">
-                                <span>📦</span>
-                                <span class="chorinho-stat-label">Arquivados:</span>
+                            <div class="chorinho-stat archived-stat">
+                                <div class="chorinho-stat-header">${Icons.archive} Arquivados</div>
                                 <span class="chorinho-stat-value" id="stat-archived">0</span>
                             </div>
                         </div>
 
                         <!-- Filtros -->
                         <div class="chorinho-history-header">
-                            <input type="text" class="chorinho-input" id="chorinho-history-search" placeholder="🔍 Pesquisar por número ou título...">
-                            <select class="chorinho-input" id="chorinho-label-filter">
-                                <option value="">🏷️ Todas as Labels</option>
-                            </select>
-                            <select class="chorinho-input" id="chorinho-sort-order">
-                                <option value="date-desc">Data (Mais recente)</option>
-                                <option value="date-asc">Data (Mais antigo)</option>
-                                <option value="title-asc">Título (A-Z)</option>
-                                <option value="title-desc">Título (Z-A)</option>
-                                <option value="number-asc">Número (Crescente)</option>
-                                <option value="number-desc">Número (Decrescente)</option>
-                            </select>
-                            <div class="chorinho-checkbox-item">
-                                <input type="checkbox" id="chorinho-show-favorites">
-                                <label for="chorinho-show-favorites">Apenas Favoritos</label>
+                            <div class="chorinho-filters-row">
+                                <div class="chorinho-search-wrapper">
+                                    <span class="chorinho-search-icon">${Icons.search}</span>
+                                    <input type="text" class="chorinho-input" id="chorinho-history-search" placeholder="Pesquisar...">
+                                </div>
+                                <select class="chorinho-input chorinho-filter-select" id="chorinho-label-filter">
+                                    <option value="">🏷️ Todas as Labels</option>
+                                </select>
+                                <select class="chorinho-input chorinho-filter-select" id="chorinho-sort-order">
+                                    <option value="date-desc">📅 Mais recentes</option>
+                                    <option value="date-asc">📅 Mais antigos</option>
+                                    <option value="title-asc">🔤 Título (A-Z)</option>
+                                    <option value="title-desc">🔤 Título (Z-A)</option>
+                                    <option value="number-asc">🔢 Número (1-9)</option>
+                                    <option value="number-desc">🔢 Número (9-1)</option>
+                                </select>
                             </div>
-                            <div class="chorinho-checkbox-item">
-                                <input type="checkbox" id="chorinho-show-archived">
-                                <label for="chorinho-show-archived">Mostrar Arquivados</label>
+                            <div class="chorinho-toggles-row">
+                                <button class="chorinho-toggle-btn" id="btn-toggle-favorites" onclick="chorinhoApp.ui.toggleFilter('favorites')">
+                                    ${Icons.star} Apenas Favoritos
+                                    <input type="checkbox" id="chorinho-show-favorites">
+                                </button>
+                                <button class="chorinho-toggle-btn" id="btn-toggle-archived" onclick="chorinhoApp.ui.toggleFilter('archived')">
+                                    ${Icons.archive} Mostrar Arquivados
+                                    <input type="checkbox" id="chorinho-show-archived">
+                                </button>
                             </div>
                         </div>
 
@@ -1581,7 +1664,7 @@
             const allChorinhos = Storage.getSavedChorinhos();
             const container = document.getElementById('chorinho-history-list');
             const searchTerm = document.getElementById('chorinho-history-search').value.toLowerCase();
-            const showArchived = document.getElementById('chorinho-show-archived').checked;
+
             const labelFilter = document.getElementById('chorinho-label-filter').value;
             const config = Storage.getConfig();
 
@@ -1594,7 +1677,22 @@
 
             // Filter chorinhos
             const showFavorites = document.getElementById('chorinho-show-favorites').checked;
+            const showArchived = document.getElementById('chorinho-show-archived').checked;
             const sortOrder = document.getElementById('chorinho-sort-order').value;
+
+            // Sync toggle buttons state
+            const btnFavorites = document.getElementById('btn-toggle-favorites');
+            const btnArchived = document.getElementById('btn-toggle-archived');
+
+            if (btnFavorites) {
+                if (showFavorites) btnFavorites.classList.add('active');
+                else btnFavorites.classList.remove('active');
+            }
+
+            if (btnArchived) {
+                if (showArchived) btnArchived.classList.add('active');
+                else btnArchived.classList.remove('active');
+            }
 
             let filteredChorinhos = allChorinhos.filter(chorinho => {
                 const matchesSearch = chorinho.taskNumber.toLowerCase().includes(searchTerm) ||
@@ -1874,6 +1972,28 @@
                 this.panel.classList.add('dark-mode');
             } else {
                 this.panel.classList.remove('dark-mode');
+            }
+        }
+
+        toggleFilter(type) {
+            const btnId = type === 'favorites' ? 'btn-toggle-favorites' : 'btn-toggle-archived';
+            const checkboxId = type === 'favorites' ? 'chorinho-show-favorites' : 'chorinho-show-archived';
+
+            const btn = document.getElementById(btnId);
+            const checkbox = document.getElementById(checkboxId);
+
+            if (btn && checkbox) {
+                checkbox.checked = !checkbox.checked;
+
+                if (checkbox.checked) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+
+                // Dispara evento change manualmente para atualizar a lista
+                const event = new Event('change');
+                checkbox.dispatchEvent(event);
             }
         }
     }
