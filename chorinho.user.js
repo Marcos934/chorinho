@@ -409,6 +409,9 @@
         .chorinho-label-manager {
             margin-top: 20px;
         }
+        .chorinho-label-manager h3 {
+            color: #333; /* Ensure dark text in light mode */
+        }
 
         .chorinho-label-item {
             display: flex;
@@ -732,6 +735,7 @@
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
+            color: #333;
         }
 
         .chorinho-panel.dark-mode .chorinho-modal-header {
