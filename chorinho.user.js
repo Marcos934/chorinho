@@ -2350,7 +2350,19 @@
 
         exportChorinhos() {
             const chorinhos = Storage.getSavedChorinhos();
-            const json = JSON.stringify(chorinhos, null, 2);
+            const allLabels = Storage.getConfig().labels;
+
+            const chorinhosForExport = chorinhos.map(chorinho => {
+                const newChorinho = JSON.parse(JSON.stringify(chorinho)); // Deep copy
+                if (newChorinho.labels && Array.isArray(newChorinho.labels)) {
+                    newChorinho.labels = newChorinho.labels.map(labelId => {
+                        return allLabels.find(l => l.id === labelId);
+                    }).filter(l => l); // Filter out nulls if a label was deleted but still referenced
+                }
+                return newChorinho;
+            });
+
+            const json = JSON.stringify(chorinhosForExport, null, 2);
             const filename = `chorinhos-export-${new Date().toISOString().split('T')[0]}.json`;
             Utils.downloadFile(json, filename);
             this.ui.showAlert('CHORINHOs exportados com sucesso!', 'success');
@@ -2372,25 +2384,63 @@
                         throw new Error("O arquivo JSON não é um array.");
                     }
 
+                    let config = Storage.getConfig();
+                    let configWasModified = false;
+
+                    const getOrCreateLabelId = (importedLabel) => {
+                        if (!importedLabel || !importedLabel.name) {
+                            return null;
+                        }
+                        
+                        const importedLabelName = importedLabel.name.trim().toLowerCase();
+                        const existingLabel = config.labels.find(l => l.name.trim().toLowerCase() === importedLabelName);
+
+                        if (existingLabel) {
+                            return existingLabel.id;
+                        } else {
+                            const newLabel = {
+                                id: `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+                                name: importedLabel.name.trim(),
+                                color: importedLabel.color || '#808080'
+                            };
+                            config.labels.push(newLabel);
+                            configWasModified = true;
+                            return newLabel.id;
+                        }
+                    };
+                    
                     const currentChorinhos = Storage.getSavedChorinhos();
 
                     importedChorinhos.forEach(importedChorinho => {
                         
-                        if (!importedChorinho.taskNumber || !importedChorinho.id) {
-                            console.warn('Chorinho importado ignorado por falta de taskNumber ou id:', importedChorinho);
+                        if (!importedChorinho.id) {
+                            console.warn('Chorinho importado ignorado por falta de id:', importedChorinho);
                             return; 
                         }
 
-                        const existingIndex = currentChorinhos.findIndex(c => c.id === importedChorinho.id);
+                        if (importedChorinho.labels && Array.isArray(importedChorinho.labels)) {
+                            importedChorinho.labels = importedChorinho.labels.map(label => {
+                                if (typeof label === 'string') {
+                                    return label;
+                                }
+                                if (typeof label === 'object' && label !== null) {
+                                    return getOrCreateLabelId(label);
+                                }
+                                return null;
+                            }).filter(id => id);
+                        }
 
+                        const existingIndex = currentChorinhos.findIndex(c => c.id === importedChorinho.id);
                         if (existingIndex >= 0) {
-                            
                             currentChorinhos[existingIndex] = importedChorinho;
                         } else {
-                            
                             currentChorinhos.unshift(importedChorinho);
                         }
                     });
+
+                    if (configWasModified) {
+                        Storage.saveConfig(config);
+                    }
 
                     Storage.set(Storage.KEYS.CHORINHOS, currentChorinhos);
                     this.ui.renderHistory();
