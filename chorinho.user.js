@@ -1470,12 +1470,12 @@
 
                 labelModalSaveBtn.addEventListener('click', () => {
                     const chorinhoId = labelModal.dataset.chorinhoId;
-                    if (!chorinhoId) return;
-
                     const body = document.getElementById('chorinho-labels-modal-body');
                     const selectedLabels = Array.from(body.querySelectorAll('input:checked')).map(input => input.value);
                     
-                    chorinhoApp.saveChorinhoLabels(chorinhoId, selectedLabels);
+                    const effectiveId = (chorinhoId && chorinhoId !== 'null' && chorinhoId !== 'undefined') ? chorinhoId : null;
+
+                    chorinhoApp.saveChorinhoLabels(effectiveId, selectedLabels);
                     this.closeLabelSelectorModal();
                 });
 
@@ -1606,17 +1606,31 @@
             if (taskData) {
                 this.loadFormData(taskData);
             } else {
-                this.clearForm(); 
-                this.applyFieldsVisibility(); 
+                this.clearForm();
+                this.currentChorinho = {
+                    taskNumber: this.currentTaskNumber,
+                    taskTitle: this.currentTaskTitle,
+                    labels: [],
+                    favorite: false,
+                    archived: false
+                };
+                this.applyFieldsVisibility();
                 
                 if (taskNumber && taskTitle) {
                     const branchName = Utils.generateBranchName(taskNumber, taskTitle);
                     document.getElementById('chorinho-branch').value = branchName;
+                    this.currentChorinho.branch = branchName;
                 }
+                this.autoSaveCurrentData();
             }
         }
 
         loadFormData(data) {
+            this.currentChorinho = data;
+            if (!this.currentChorinho.labels) {
+                this.currentChorinho.labels = [];
+            }
+
             document.getElementById('chorinho-sistema').value = data.sistema || '';
             document.getElementById('chorinho-mr').value = data.mr || '';
             document.getElementById('chorinho-objetivo').value = data.objetivo || '';
@@ -1641,7 +1655,6 @@
             }
 
             
-            this.currentChorinho = data;
             this.renderLabelsSelector();
 
             this.applyFieldsVisibility();
@@ -1678,6 +1691,8 @@
                 taskTitle = taskDisplay;
             }
 
+            const currentLabels = (this.currentChorinho && this.currentChorinho.labels) ? this.currentChorinho.labels : [];
+
             return {
                 taskNumber: this.currentTaskNumber,
                 taskTitle: this.currentTaskTitle,
@@ -1694,9 +1709,9 @@
                 comandos: document.getElementById('chorinho-comandos').value,
                 problemasEncontrados: document.getElementById('chorinho-problemas-encontrados').value,
                 observacoes: document.getElementById('chorinho-observacoes').value,
-                labels: this.getSelectedLabels(),
-                archived: false,
-                favorite: false
+                labels: currentLabels,
+                archived: (this.currentChorinho && this.currentChorinho.archived) || false,
+                favorite: (this.currentChorinho && this.currentChorinho.favorite) || false
             };
         }
 
@@ -1720,7 +1735,7 @@
             const showCheckboxes = document.getElementById('chorinho-plano-de-acao-checkboxes').checked;
 
             const isChecked = value.startsWith('[x] ');
-            const textValue = value.replace(/[[x ]]\s*/, '');
+            const textValue = value.replace(/^\[[x ]?\]\s*/, '');
 
             planoDeAcaoDiv.innerHTML = `
                 ${showCheckboxes ? `<input type="checkbox" class="chorinho-plano-de-acao-checkbox" id="plano-de-acao-checkbox-${index}" ${isChecked ? 'checked' : ''}>` : ''}
@@ -2031,6 +2046,7 @@
         }
 
         clearForm() {
+            this.currentChorinho = { labels: [] }; 
             document.getElementById('chorinho-sistema').value = '';
             document.getElementById('chorinho-mr').value = '';
             document.getElementById('chorinho-branch').value = '';
@@ -2046,6 +2062,7 @@
             const container = document.getElementById('chorinho-plano-de-acao-container');
             container.innerHTML = '';
             this.addPlanoDeAcaoElement(0); 
+            this.renderLabelsSelector(); 
         }
 
         applyFieldsVisibility() {
@@ -2279,27 +2296,27 @@
         }
 
         saveChorinhoLabels(chorinhoId, newLabels) {
-            if (chorinhoId) { 
+            if (chorinhoId) {
                 const chorinhos = Storage.getSavedChorinhos();
                 const chorinhoIndex = chorinhos.findIndex(c => c.id === chorinhoId);
-
                 if (chorinhoIndex >= 0) {
                     chorinhos[chorinhoIndex].labels = newLabels;
                     Storage.set(Storage.KEYS.CHORINHOS, chorinhos);
                     this.ui.renderHistory();
-                    this.ui.showAlert('Labels atualizadas com sucesso!', 'success');
+
+                    if (this.ui.currentChorinho && this.ui.currentChorinho.id === chorinhoId) {
+                        this.ui.currentChorinho.labels = newLabels;
+                    }
                 }
-            } else { 
+            } else {
                 if (this.ui.currentChorinho) {
                     this.ui.currentChorinho.labels = newLabels;
-                    this.ui.showAlert('Labels selecionadas para o formulário!', 'success');
-                } else {
-                    
-                    
-                    this.ui.showAlert('Erro: Não foi possível aplicar as labels. Nenhum CHORINHO ativo no formulário.', 'error');
                 }
             }
-            this.ui.renderLabelsSelector(); 
+            
+            this.ui.renderLabelsSelector();
+            this.ui.autoSaveCurrentData();
+            this.ui.showAlert('Labels atualizadas!', 'success');
         }
 
         saveConfig() {
