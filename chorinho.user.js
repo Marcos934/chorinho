@@ -975,6 +975,8 @@
         generate(data, config) {
             let template = '';
 
+            const indent = (text, indentation = '\t') => (text || '').replace(/\n/g, `\n${indentation}`);
+
             if (config.fields.sistema) {
                 template += `## Sistema: ${data.sistema || ''}\n\n`;
             }
@@ -989,7 +991,7 @@
             if (config.fields.descricao) {
                 template += `\n## Descrição:\n`;
                 if (config.fields.objetivo) {
-                    template += `   Objetivo: ${data.objetivo || ''}\n\n`;
+                    template += `   Objetivo: ${(data.objetivo || '').replace(/\n/g, '\n   ')}\n\n`;
                 }
                 if (config.fields.planoDeAcaoEnabled && data.planoDeAcao && data.planoDeAcao.length > 0) {
                     template += `\n## Plano de Ação:\n`;
@@ -1001,31 +1003,31 @@
             }
 
             if (config.fields.solucao) {
-                template += `## Solução Implementada:\n \t${data.solucao || ''}\n\n`;
+                template += `## Solução Implementada:\n \t${indent(data.solucao)}\n\n`;
             }
 
             if (config.fields.modificacoes) {
-                template += `## Modificações:\n \t${data.modificacoes || ''}\n\n`;
+                template += `## Modificações:\n \t${indent(data.modificacoes)}\n\n`;
             }
 
             if (config.fields.fluxo) {
-                template += `## Fluxo de teste na UI:\n \t${data.fluxo || ''}\n\n`;
+                template += `## Fluxo de teste na UI:\n \t${indent(data.fluxo)}\n\n`;
             }
 
             if (config.fields.navegacao) {
-                template += `## Navegação na UI:\n \t${data.navegacao || ''}\n\n`;
+                template += `## Navegação na UI:\n \t${indent(data.navegacao)}\n\n`;
             }
 
             if (config.fields.comandos) {
-                template += `## Comandos para testes BANCO DE DADOS:\n \t${data.comandos || ''}\n\n`;
+                template += `## Comandos para testes BANCO DE DADOS:\n \t${indent(data.comandos)}\n\n`;
             }
 
             if (config.fields.problemasEncontrados) {
-                template += `## Problemas encontrados:\n \t${data.problemasEncontrados || ''}\n\n`;
+                template += `## Problemas encontrados:\n \t${indent(data.problemasEncontrados)}\n\n`;
             }
 
             if (config.fields.observacoes) {
-                template += `## Observações/Notas\n \t${data.observacoes || ''}\n`;
+                template += `## Observações/Notas\n \t${indent(data.observacoes)}\n`;
             }
 
             return template;
