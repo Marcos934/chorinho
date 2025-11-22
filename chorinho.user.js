@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CHORINHO - Formatador de CHORE para runrun.it
 // @namespace    http://tampermonkey.net/
-// @version      1.0.2
+// @version      1.5.0
 // @description  Extensão para formatar CHORE de tasks em Markdown no runrun.it
 // @author       Marcos V. Mulinari
 // @match        https://runrun.it/pt-BR/*
