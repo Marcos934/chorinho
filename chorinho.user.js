@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         CHORINHO - Formatador de CHORE para runrun.it
 // @namespace    http://tampermonkey.net/
-// @version      1.5.0
-// @description  Extensão para formatar CHORE de tasks em Markdown no runrun.it
+// @version      1.6.3
+// @description  Extensão para formatar CHORE de tasks em Markdown no runrun.it com pré-carregamento automático
 // @author       Marcos V. Mulinari
 // @match        https://runrun.it/pt-BR/*
 // @grant        none
@@ -37,7 +37,7 @@
         starFill: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>',
         duplicate: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>',
         sort: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M10.082 5.629 9.664 7H8.598l1.789-5.332h1.234L13.402 7h-1.12l-.419-1.371h-1.781zm1.57-.785L11 2.687h-.047l-.652 2.157h1.351z"/><path d="M12.96 14H9.028v-.691l2.579-3.72v-.054H9.098v-.867h3.785v.691l-2.567 3.72v.054h2.645V14zM4.5 2.5a.5.5 0 0 0-1 0v9.793l-1.146-1.147a.5.5 0 0 0-.708.708l2 1.999.007.007a.497.497 0 0 0 .7-.006l2-2a.5.5 0 0 0-.707-.708L4.5 12.293V2.5z"/></svg>',
-        search: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>' 
+        search: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>'
    };
 
     const styles = `
@@ -357,7 +357,7 @@
             opacity: 0.4;
             background: #f0f0f0;
         }
-        
+
         .chorinho-label {
             display: inline-block;
             padding: 3px 10px;
@@ -459,7 +459,7 @@
         }
 
         .chorinho-filters-row .chorinho-input {
-            margin: 0; 
+            margin: 0;
         }
 
         .chorinho-search-wrapper {
@@ -469,7 +469,7 @@
 
         .chorinho-search-wrapper input {
             width: 100%;
-            padding-left: 32px !important; 
+            padding-left: 32px !important;
         }
 
         .chorinho-search-icon {
@@ -492,7 +492,7 @@
             align-items: center;
         }
 
-        
+
         .chorinho-toggle-btn {
             display: inline-flex;
             align-items: center;
@@ -515,7 +515,7 @@
         }
 
         .chorinho-toggle-btn.active {
-            background: #e1f0ff; 
+            background: #e1f0ff;
             color: #0366d6;
             border-color: #0366d6;
         }
@@ -595,7 +595,7 @@
             text-transform: uppercase;
             margin-left: 10px;
         }
-        
+
         .chorinho-panel.dark-mode {
             background: #2d333b;
             color: #c9d1d9;
@@ -650,51 +650,51 @@
         }
         .chorinho-panel.dark-mode .chorinho-label-item,
         .chorinho-panel.dark-mode .chorinho-stats {
-            background: transparent; 
-            border: none; 
+            background: transparent;
+            border: none;
             padding: 0;
         }
-        
+
         .chorinho-panel.dark-mode .chorinho-stat {
             background: #1c2128;
             border-color: #444c56;
         }
-        
+
         .chorinho-panel.dark-mode .chorinho-stat-header {
             color: #8b949e;
         }
-        
+
         .chorinho-panel.dark-mode .chorinho-stat-value {
             color: #c9d1d9;
         }
-        
+
         .chorinho-panel.dark-mode .chorinho-history-header {
             background: #1c2128;
             border-color: #444c56;
         }
-        
+
         .chorinho-panel.dark-mode .chorinho-toggle-btn {
             background: #1c2128;
             border-color: #444c56;
             color: #c9d1d9;
         }
-        
+
         .chorinho-panel.dark-mode .chorinho-toggle-btn:hover {
             background: #2d333b;
             border-color: #768390;
         }
-        
+
         .chorinho-panel.dark-mode .chorinho-toggle-btn.active {
             background: rgba(56, 139, 253, 0.15);
             color: #58a6ff;
             border-color: #58a6ff;
         }
-        
+
         .chorinho-panel.dark-mode .chorinho-search-icon {
             color: #8b949e;
         }
 
-        
+
         .chorinho-modal-overlay {
             position: absolute;
             top: 0;
@@ -793,7 +793,7 @@
     `;
 
     const Utils = {
-        
+
         slugify(text) {
             return text
                 .normalize('NFD')
@@ -809,46 +809,85 @@
             return text.replace(/\//g, '-').replace(/[\\?%*:|"<>]/g, '');
         },
 
-        
+
         extractTaskNumber() {
             try {
-                const selector = "#task-show-modal .sc-kzGZOW.sc-OSwEw.fEAbVr.fZkMcP > span";
-                const element = document.querySelector(selector);
-                if (element) {
-                    const text = element.innerText;
-                    const match = text.match(/#(\d+)/);
-                    return match ? match[1] : '';
+                // Tentar múltiplos seletores (classes CSS do runrun.it podem mudar)
+                const selectors = [
+                    "#task-show-modal .sc-iGttcv",  // Seletor atual (2025)
+                    "#task-show-modal .sc-kzGZOW.sc-OSwEw.fEAbVr.fZkMcP > span",  // Seletor antigo
+                    "#task-show-modal header span",
+                    "#task-show-modal [class*='TaskTitle'] span",
+                    "#task-show-modal h1 span",
+                    "#task-show-modal h2 span"
+                ];
+
+                for (const selector of selectors) {
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        const text = element.innerText;
+                        const match = text.match(/#(\d+)/);
+                        if (match) {
+                            DebugLog.log(`CHORINHO: Task number encontrado (#${match[1]}) com seletor: ${selector}`);
+                            return match[1];
+                        }
+                    }
                 }
+
+                DebugLog.warn('CHORINHO: Não foi possível extrair o número da task. Seletores podem ter mudado.');
             } catch (e) {
                 console.error('Erro ao extrair número da task:', e);
             }
             return '';
         },
 
-        
+
         extractTaskTitle() {
             try {
-                const selector = "#task-show-modal span span";
-                const element = document.querySelector(selector);
-                return element ? element.innerText.trim() : '';
+                // Tentar múltiplos seletores
+                const selectors = [
+                    "#task-show-modal .sc-hMLsBR",  // Seletor atual (2025)
+                    "#task-show-modal .sc-iveFHk.sc-jNJNQp",  // Alternativo atual
+                    "#task-show-modal span span",  // Seletor antigo
+                    "#task-show-modal header h1",
+                    "#task-show-modal header h2",
+                    "#task-show-modal [class*='TaskTitle']",
+                    "#task-show-modal [class*='title']"
+                ];
+
+                for (const selector of selectors) {
+                    const element = document.querySelector(selector);
+                    if (element) {
+                        const title = element.innerText.trim();
+                        // Remover o número da task do título se presente
+                        const cleanTitle = title.replace(/#\d+\s*-?\s*/, '').trim();
+                        if (cleanTitle && cleanTitle.length > 3) {  // Garantir que tem conteúdo real
+                            DebugLog.log(`CHORINHO: Task title encontrado ("${cleanTitle.substring(0, 50)}...") com seletor: ${selector}`);
+                            return cleanTitle;
+                        }
+                    }
+                }
+
+                DebugLog.warn('CHORINHO: Não foi possível extrair o título da task. Seletores podem ter mudado.');
             } catch (e) {
                 console.error('Erro ao extrair título da task:', e);
             }
             return '';
         },
 
-        
+
         isTaskModalOpen() {
-            return document.querySelector("#modal-container") !== null;
+            const modal = document.querySelector("#task-show-modal");
+            return modal !== null && modal.offsetParent !== null;
         },
 
-        
+
         generateBranchName(number, title) {
             const slugTitle = this.slugify(title);
             return `Feature-${number}-${slugTitle}`;
         },
 
-        
+
         copyToClipboard(text) {
             const textarea = document.createElement('textarea');
             textarea.value = text;
@@ -860,7 +899,7 @@
             document.body.removeChild(textarea);
         },
 
-        
+
         downloadFile(content, filename) {
             const blob = new Blob([content], { type: 'text/markdown' });
             const url = URL.createObjectURL(blob);
@@ -871,9 +910,25 @@
             URL.revokeObjectURL(url);
         },
 
-        
+
         formatDate(date) {
             return new Date(date).toLocaleString('pt-BR');
+        }
+    };
+
+    // Helper para logs de debug
+    const DebugLog = {
+        log(...args) {
+            const config = Storage.getConfig();
+            if (config.fields.debugMode) {
+                console.log(...args);
+            }
+        },
+        warn(...args) {
+            const config = Storage.getConfig();
+            if (config.fields.debugMode) {
+                console.warn(...args);
+            }
         }
     };
 
@@ -914,10 +969,10 @@
 
             const existingIndex = chorinhos.findIndex(c => c.taskNumber === chorinho.taskNumber);
             if (existingIndex >= 0) {
-                chorinho.id = chorinhos[existingIndex].id; 
+                chorinho.id = chorinhos[existingIndex].id;
                 chorinhos[existingIndex] = chorinho;
             } else {
-                chorinho.id = Date.now().toString(); 
+                chorinho.id = Date.now().toString();
                 chorinhos.unshift(chorinho);
             }
 
@@ -947,7 +1002,9 @@
                     observacoes: true,
                     navegacao: true,
                     previewEnabled: false,
-                    darkMode: false
+                    darkMode: false,
+                    autoPreload: true,
+                    debugMode: false
                 },
                 labels: [
                     { id: 'label-urgent', name: 'Urgente', color: '#d73a49' },
@@ -1041,6 +1098,9 @@
             this.currentChorinho = null;
             this.currentTaskNumber = '';
             this.currentTaskTitle = '';
+            this.modalObserver = null;
+            this.taskObserver = null;
+            this.lastTaskNumber = '';
             this.init();
         }
 
@@ -1052,6 +1112,7 @@
             this.setupEventListeners();
             this.checkModalState();
             this.applyDarkMode();
+            this.startTaskObserver();
         }
 
         injectStyles() {
@@ -1088,7 +1149,7 @@
                     </div>
                     <div id="chorinho-hidden-fields-warning" class="chorinho-alert chorinho-alert-warning" style="display: none;"></div>
 
-                    
+
                     <div class="chorinho-tab-content active" data-content="form">
                         <div id="chorinho-no-task-warning" class="chorinho-alert chorinho-alert-warning" style="display: none;">O formulário está desabilitado pois não foi possível obter o número da task.</div>
                         <div class="chorinho-section">
@@ -1119,10 +1180,10 @@
                         <div class="chorinho-section">
                             <label>${Icons.tag} Labels</label>
                             <div id="chorinho-labels-selector" class="chorinho-checkbox-group">
-                                
+
                             </div>
                             <div id="chorinho-selected-labels" class="chorinho-labels-container" style="margin-top: 10px;">
-                                
+
                             </div>
                         </div>
 
@@ -1188,7 +1249,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="chorinho-tab-content" data-content="preview">
                         <div class="chorinho-section">
                             <h3>Preview do Markdown</h3>
@@ -1196,9 +1257,9 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="chorinho-tab-content" data-content="history">
-                        
+
                         <div class="chorinho-stats" id="chorinho-stats">
                             <div class="chorinho-stat total">
                                 <div class="chorinho-stat-header">${Icons.document} Total</div>
@@ -1214,7 +1275,7 @@
                             </div>
                         </div>
 
-                        
+
                         <div class="chorinho-history-header">
                             <div class="chorinho-filters-row">
                                 <div class="chorinho-search-wrapper">
@@ -1253,7 +1314,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="chorinho-tab-content" data-content="config">
                         <div class="chorinho-section">
                             <label>Campos Visíveis no Template</label>
@@ -1316,23 +1377,31 @@
                                     <input type="checkbox" id="config-darkMode">
                                     <label for="config-darkMode">Modo Escuro</label>
                                 </div>
+                                <div class="chorinho-checkbox-item">
+                                    <input type="checkbox" id="config-autoPreload" checked>
+                                    <label for="config-autoPreload">Pré-carregamento Automático (detecta mudanças no card)</label>
+                                </div>
+                                <div class="chorinho-checkbox-item">
+                                    <input type="checkbox" id="config-debugMode">
+                                    <label for="config-debugMode">Modo Debug (exibe logs no console)</label>
+                                </div>
                             </div>
                         </div>
 
-                        
+
                         <div class="chorinho-label-manager">
                             <label><h3>${Icons.tag} Gerenciar Labels Personalizadas</h3></label>
 
-                            
+
                             <div style="display: flex; gap: 10px; margin-bottom: 15px; align-items: center;">
                                 <input type="text" class="chorinho-input" id="chorinho-new-label-name" placeholder="Nome da label" style="flex: 1;">
                                 <input type="color" class="chorinho-color-picker" id="chorinho-new-label-color" value="#3498db">
                                 <button class="chorinho-btn chorinho-btn-success" onclick="chorinhoApp.createLabel()">${Icons.plus} Criar</button>
                             </div>
 
-                            
+
                             <div id="chorinho-labels-list">
-                                
+
                             </div>
                         </div>
 
@@ -1342,7 +1411,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="chorinho-modal-overlay" id="chorinho-labels-modal">
                     <div class="chorinho-modal">
                         <div class="chorinho-modal-header">
@@ -1350,7 +1419,7 @@
                             <button class="chorinho-btn chorinho-btn-small chorinho-btn-danger" id="chorinho-labels-modal-close">${Icons.close}</button>
                         </div>
                         <div class="chorinho-modal-body" id="chorinho-labels-modal-body">
-                            
+
                         </div>
                         <div class="chorinho-modal-footer">
                             <button class="chorinho-btn" id="chorinho-labels-modal-cancel">Cancelar</button>
@@ -1364,37 +1433,37 @@
         }
 
         setupEventListeners() {
-            
+
             this.panel.querySelector('.chorinho-close').onclick = () => this.closePanel();
 
-            
+
             this.panel.querySelectorAll('.chorinho-tab').forEach(tab => {
                 tab.onclick = () => this.switchTab(tab.dataset.tab);
             });
 
-            
+
             this.panel.querySelectorAll('input, textarea').forEach(input => {
                 input.addEventListener('change', () => this.autoSaveCurrentData());
             });
 
-            
+
             document.getElementById('chorinho-import-file').addEventListener('change', (e) => {
                 window.chorinhoApp.handleImportFile(e);
             });
 
-            
+
             document.getElementById('chorinho-history-search').addEventListener('input', () => {
                 this.renderHistory();
             });
 
-            
+
             document.getElementById('chorinho-copy-branch-btn').addEventListener('click', () => {
                 const branchName = document.getElementById('chorinho-branch').value;
                 Utils.copyToClipboard(branchName);
                 this.showAlert('Nome da branch copiado para o clipboard!', 'success');
             });
-            
-            
+
+
             const labelsListContainer = document.getElementById('chorinho-labels-list');
             if (labelsListContainer) {
                 labelsListContainer.addEventListener('click', (event) => {
@@ -1412,7 +1481,7 @@
                 });
             }
 
-            
+
             const configDescricao = document.getElementById('config-descricao');
             const subGroupDescricao = configDescricao.closest('.chorinho-checkbox-item').nextElementSibling;
             const configPlanoDeAcaoEnabled = document.getElementById('config-planoDeAcaoEnabled');
@@ -1432,7 +1501,7 @@
                 toggleSubGroup(configPlanoDeAcaoEnabled, subGroupPlanoDeAcao);
             });
 
-            
+
             const configTab = this.panel.querySelector('.chorinho-tab[data-tab="config"]');
             configTab.addEventListener('click', () => {
                 toggleSubGroup(configDescricao, subGroupDescricao);
@@ -1444,7 +1513,7 @@
                 this.autoSaveCurrentData();
             });
 
-            
+
             document.getElementById('chorinho-label-filter').addEventListener('change', () => {
                 this.renderHistory();
             });
@@ -1461,7 +1530,7 @@
                 this.renderHistory();
             });
 
-            
+
             const labelModal = document.getElementById('chorinho-labels-modal');
             if (labelModal) {
                 const labelModalSaveBtn = document.getElementById('chorinho-labels-modal-save');
@@ -1472,7 +1541,7 @@
                     const chorinhoId = labelModal.dataset.chorinhoId;
                     const body = document.getElementById('chorinho-labels-modal-body');
                     const selectedLabels = Array.from(body.querySelectorAll('input:checked')).map(input => input.value);
-                    
+
                     const effectiveId = (chorinhoId && chorinhoId !== 'null' && chorinhoId !== 'undefined') ? chorinhoId : null;
 
                     chorinhoApp.saveChorinhoLabels(effectiveId, selectedLabels);
@@ -1496,7 +1565,8 @@
             this.panel.classList.add('open');
             this.isOpen = true;
             this.checkModalState();
-            this.applyFieldsVisibility(); 
+            this.applyFieldsVisibility();
+            this.debugShowModalStructure();
         }
 
         closePanel() {
@@ -1507,12 +1577,12 @@
         switchTab(tabName) {
             this.currentTab = tabName;
 
-            
+
             this.panel.querySelectorAll('.chorinho-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.tab === tabName);
             });
 
-            
+
             this.panel.querySelectorAll('.chorinho-tab-content').forEach(content => {
                 content.classList.toggle('active', content.dataset.content === tabName);
             });
@@ -1529,19 +1599,19 @@
                 }
             }
 
-            
+
             if (tabName === 'history') {
                 this.renderHistory();
                 this.populateLabelFilter();
             }
 
-            
+
             if (tabName === 'config') {
                 this.loadConfig();
                 this.renderLabelsManager();
             }
 
-            
+
             if (tabName === 'form') {
                 this.renderLabelsSelector();
             }
@@ -1571,12 +1641,12 @@
             const taskDisplay = document.getElementById('chorinho-task-display');
 
             if (!taskNumber) {
-                this.setFormEnabled(false); 
+                this.setFormEnabled(false);
                 this.clearForm();
-                taskDisplay.innerText = 'Nenhuma task do Runrun.it detectada. Crie uma chorinho manualmente.'; 
-                this.currentTaskNumber = ''; 
-                this.currentTaskTitle = '';   
-                return; 
+                taskDisplay.innerText = 'Nenhuma task do Runrun.it detectada. Crie uma chorinho manualmente.';
+                this.currentTaskNumber = '';
+                this.currentTaskTitle = '';
+                return;
             }
 
             this.setFormEnabled(true);
@@ -1599,7 +1669,7 @@
                 document.getElementById('chorinho-branch').value = branchName;
             }
 
-            
+
             const savedChorinhos = Storage.getSavedChorinhos();
             const taskData = savedChorinhos.find(c => c.taskNumber === taskNumber);
 
@@ -1615,7 +1685,7 @@
                     archived: false
                 };
                 this.applyFieldsVisibility();
-                
+
                 if (taskNumber && taskTitle) {
                     const branchName = Utils.generateBranchName(taskNumber, taskTitle);
                     document.getElementById('chorinho-branch').value = branchName;
@@ -1633,6 +1703,7 @@
 
             document.getElementById('chorinho-sistema').value = data.sistema || '';
             document.getElementById('chorinho-mr').value = data.mr || '';
+            document.getElementById('chorinho-branch').value = data.branch || '';
             document.getElementById('chorinho-objetivo').value = data.objetivo || '';
             document.getElementById('chorinho-solucao').value = data.solucao || '';
             document.getElementById('chorinho-modificacoes').value = data.modificacoes || '';
@@ -1643,7 +1714,7 @@
             document.getElementById('chorinho-observacoes').value = data.observacoes || '';
             document.getElementById('chorinho-plano-de-acao-checkboxes').checked = data.planoDeAcaoCheckboxes || false;
 
-            
+
             const container = document.getElementById('chorinho-plano-de-acao-container');
             container.innerHTML = '';
             if (data.planoDeAcao && data.planoDeAcao.length > 0) {
@@ -1654,7 +1725,7 @@
                 this.addPlanoDeAcaoElement(0);
             }
 
-            
+
             this.renderLabelsSelector();
 
             this.applyFieldsVisibility();
@@ -1686,7 +1757,7 @@
                 taskNumber = match[1].replace('#', '');
                 taskTitle = match[2];
             } else {
-                
+
                 taskNumber = taskDisplay.match(/#(\d+)/) ? taskDisplay.match(/#(\d+)/)[1] : '';
                 taskTitle = taskDisplay;
             }
@@ -1827,19 +1898,19 @@
             const labelFilter = document.getElementById('chorinho-label-filter').value;
             const config = Storage.getConfig();
 
-            
+
             const totalActive = allChorinhos.filter(c => !c.archived).length;
             const totalArchived = allChorinhos.filter(c => c.archived).length;
             document.getElementById('stat-total').textContent = allChorinhos.length;
             document.getElementById('stat-active').textContent = totalActive;
             document.getElementById('stat-archived').textContent = totalArchived;
 
-            
+
             const showFavorites = document.getElementById('chorinho-show-favorites').checked;
             const showArchived = document.getElementById('chorinho-show-archived').checked;
             const sortOrder = document.getElementById('chorinho-sort-order').value;
 
-            
+
             const btnFavorites = document.getElementById('btn-toggle-favorites');
             const btnArchived = document.getElementById('btn-toggle-archived');
 
@@ -1863,7 +1934,7 @@
                 return matchesSearch && matchesArchived && matchesLabel && matchesFavorite;
             });
 
-            
+
             filteredChorinhos.sort((a, b) => {
                 switch (sortOrder) {
                     case 'date-asc':
@@ -1947,21 +2018,21 @@
 
             if (!config.labels || config.labels.length === 0) {
                 container.innerHTML = '<p style="color: #999; font-size: 12px;">Nenhuma label disponível. Crie labels nas configurações.</p>';
-                selectedLabelsContainer.innerHTML = ''; 
+                selectedLabelsContainer.innerHTML = '';
                 return;
             }
 
-            
+
             const currentData = this.currentChorinho || {};
             const selectedLabels = currentData.labels || [];
             selectedLabelsContainer.innerHTML = this.renderLabelsBadges(selectedLabels, config.labels);
 
-            
+
             container.innerHTML = `
                 <button type="button" class="chorinho-btn chorinho-btn-sm" id="chorinho-open-labels-modal-btn">${Icons.tag} Selecionar Labels</button>
             `;
 
-            
+
             document.getElementById('chorinho-open-labels-modal-btn').onclick = () => {
                 const chorinhoId = this.currentChorinho ? this.currentChorinho.id : null;
                 const initialSelectedLabels = this.currentChorinho ? this.currentChorinho.labels : [];
@@ -2031,6 +2102,8 @@
             document.getElementById('config-observacoes').checked = config.fields.observacoes;
             document.getElementById('config-navegacao').checked = config.fields.navegacao;
             document.getElementById('config-darkMode').checked = config.fields.darkMode;
+            document.getElementById('config-autoPreload').checked = config.fields.autoPreload !== undefined ? config.fields.autoPreload : true;
+            document.getElementById('config-debugMode').checked = config.fields.debugMode || false;
         }
 
         showAlert(message, type = 'success') {
@@ -2046,7 +2119,7 @@
         }
 
         clearForm() {
-            this.currentChorinho = { labels: [] }; 
+            this.currentChorinho = { labels: [] };
             document.getElementById('chorinho-sistema').value = '';
             document.getElementById('chorinho-mr').value = '';
             document.getElementById('chorinho-branch').value = '';
@@ -2061,13 +2134,13 @@
 
             const container = document.getElementById('chorinho-plano-de-acao-container');
             container.innerHTML = '';
-            this.addPlanoDeAcaoElement(0); 
-            this.renderLabelsSelector(); 
+            this.addPlanoDeAcaoElement(0);
+            this.renderLabelsSelector();
         }
 
         applyFieldsVisibility() {
             const config = Storage.getConfig();
-            const data = this.getFormData(); 
+            const data = this.getFormData();
             const hiddenFieldsWithValue = [];
 
             const fieldDisplayNames = {
@@ -2093,7 +2166,7 @@
                 elements.forEach(el => {
                     let isVisible = config.fields[field] === undefined ? true : config.fields[field];
 
-                    
+
                     if (field === 'objetivo' || field === 'planoDeAcaoEnabled') {
                         if (!config.fields.descricao) {
                             isVisible = false;
@@ -2136,6 +2209,122 @@
             }
         }
 
+        startTaskObserver() {
+            const config = Storage.getConfig();
+            const autoPreloadEnabled = config.fields.autoPreload !== undefined ? config.fields.autoPreload : true;
+
+            if (!autoPreloadEnabled) {
+                DebugLog.log('CHORINHO: Auto-preload desabilitado.');
+                return;
+            }
+
+            DebugLog.log('CHORINHO: Iniciando observador de tasks...');
+
+            // Observador para detectar quando o modal do card é aberto/modificado
+            this.modalObserver = new MutationObserver(() => {
+                const taskNumber = Utils.extractTaskNumber();
+                if (taskNumber && taskNumber !== this.lastTaskNumber) {
+                    DebugLog.log(`CHORINHO: Detectada mudança de task: ${taskNumber}`);
+                    this.lastTaskNumber = taskNumber;
+                    if (this.isOpen) {
+                        this.fillTaskData();
+                    }
+                }
+            });
+
+            // Observador para mudanças no DOM (quando cards são abertos)
+            this.taskObserver = new MutationObserver(() => {
+                const modal = document.querySelector("#task-show-modal");
+                if (modal && Utils.isTaskModalOpen()) {
+                    // Modal está aberto, vamos observar mudanças dentro dele
+                    if (!this.modalObserver) {
+                        this.startTaskObserver();
+                    } else {
+                        this.modalObserver.observe(modal, {
+                            childList: true,
+                            subtree: true,
+                            characterData: true
+                        });
+                    }
+
+                    // Atualizar dados se o painel estiver aberto
+                    const taskNumber = Utils.extractTaskNumber();
+                    if (taskNumber && taskNumber !== this.lastTaskNumber && this.isOpen) {
+                        DebugLog.log(`CHORINHO: Card aberto detectado: ${taskNumber}`);
+                        this.lastTaskNumber = taskNumber;
+                        this.fillTaskData();
+                    }
+                }
+            });
+
+            // Começar a observar mudanças no body
+            this.taskObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+
+            DebugLog.log('CHORINHO: Observador de tasks iniciado com sucesso.');
+        }
+
+        stopTaskObserver() {
+            if (this.modalObserver) {
+                this.modalObserver.disconnect();
+                this.modalObserver = null;
+            }
+            if (this.taskObserver) {
+                this.taskObserver.disconnect();
+                this.taskObserver = null;
+            }
+            DebugLog.log('CHORINHO: Observador de tasks parado.');
+        }
+
+        restartTaskObserver() {
+            DebugLog.log('CHORINHO: Reiniciando observador de tasks...');
+            this.stopTaskObserver();
+            this.startTaskObserver();
+        }
+
+        debugShowModalStructure() {
+            const config = Storage.getConfig();
+            if (!config.fields.debugMode) return;
+
+            const modal = document.querySelector("#task-show-modal");
+            if (!modal) {
+                DebugLog.warn('CHORINHO DEBUG: Modal não encontrado');
+                return;
+            }
+
+            console.log('=== CHORINHO DEBUG: ESTRUTURA DO MODAL ===');
+            console.log('Modal encontrado:', modal);
+
+            // Mostrar todos os spans com texto
+            const spans = modal.querySelectorAll("span");
+            console.log(`\n📌 ${spans.length} SPANS encontrados:`);
+            spans.forEach((span, i) => {
+                const text = span.innerText?.substring(0, 100);
+                if (text && text.trim()) {
+                    console.log(`  Span[${i}]: "${text}" | Class: ${span.className}`);
+                }
+            });
+
+            // Mostrar headers
+            const headers = modal.querySelectorAll("h1, h2, h3, h4, h5, h6");
+            if (headers.length > 0) {
+                console.log(`\n📌 ${headers.length} HEADERS encontrados:`);
+                headers.forEach((h, i) => {
+                    console.log(`  ${h.tagName}[${i}]: "${h.innerText.substring(0, 100)}" | Class: ${h.className}`);
+                });
+            }
+
+            // Tentar extrair task number e title
+            const taskNumber = Utils.extractTaskNumber();
+            const taskTitle = Utils.extractTaskTitle();
+            console.log('\n📌 EXTRAÇÃO ATUAL:');
+            console.log(`  Task Number: ${taskNumber || '❌ NÃO ENCONTRADO'}`);
+            console.log(`  Task Title: ${taskTitle || '❌ NÃO ENCONTRADO'}`);
+            console.log('==========================================\n');
+        }
+
         toggleFilter(type) {
             const btnId = type === 'favorites' ? 'btn-toggle-favorites' : 'btn-toggle-archived';
             const checkboxId = type === 'favorites' ? 'chorinho-show-favorites' : 'chorinho-show-archived';
@@ -2152,7 +2341,7 @@
                     btn.classList.remove('active');
                 }
 
-                
+
                 const event = new Event('change');
                 checkbox.dispatchEvent(event);
             }
@@ -2168,7 +2357,7 @@
                 return;
             }
 
-            modal.dataset.chorinhoId = chorinhoId; 
+            modal.dataset.chorinhoId = chorinhoId;
 
             body.innerHTML = '';
             config.labels.forEach(label => {
@@ -2313,7 +2502,7 @@
                     this.ui.currentChorinho.labels = newLabels;
                 }
             }
-            
+
             this.ui.renderLabelsSelector();
             this.ui.autoSaveCurrentData();
             this.ui.showAlert('Labels atualizadas!', 'success');
@@ -2337,7 +2526,9 @@
                     problemasEncontrados: document.getElementById('config-problemasEncontrados').checked,
                     observacoes: document.getElementById('config-observacoes').checked,
                     navegacao: document.getElementById('config-navegacao').checked,
-                    darkMode: document.getElementById('config-darkMode').checked
+                    darkMode: document.getElementById('config-darkMode').checked,
+                    autoPreload: document.getElementById('config-autoPreload').checked,
+                    debugMode: document.getElementById('config-debugMode').checked
                 }
             };
 
@@ -2345,6 +2536,7 @@
             this.ui.applyFieldsVisibility();
             this.ui.applyDarkMode();
             this.ui.refreshPlanoDeAcaoUI();
+            this.ui.restartTaskObserver();
             this.ui.showAlert('Configurações salvas com sucesso!', 'success');
         }
 
@@ -2391,7 +2583,7 @@
                         if (!importedLabel || !importedLabel.name) {
                             return null;
                         }
-                        
+
                         const importedLabelName = importedLabel.name.trim().toLowerCase();
                         const existingLabel = config.labels.find(l => l.name.trim().toLowerCase() === importedLabelName);
 
@@ -2408,14 +2600,14 @@
                             return newLabel.id;
                         }
                     };
-                    
+
                     const currentChorinhos = Storage.getSavedChorinhos();
 
                     importedChorinhos.forEach(importedChorinho => {
-                        
+
                         if (!importedChorinho.id) {
                             console.warn('Chorinho importado ignorado por falta de id:', importedChorinho);
-                            return; 
+                            return;
                         }
 
                         if (importedChorinho.labels && Array.isArray(importedChorinho.labels)) {
@@ -2517,7 +2709,7 @@
             config.labels = config.labels.filter(l => l.id !== labelId);
             Storage.saveConfig(config);
 
-            
+
             const chorinhos = Storage.getSavedChorinhos();
             chorinhos.forEach(chorinho => {
                 if (chorinho.labels) {
@@ -2568,8 +2760,8 @@
             newChorinho.id = Date.now().toString();
             newChorinho.savedAt = new Date().toISOString();
             newChorinho.taskTitle = `${newChorinho.taskTitle} (Cópia)`;
-            newChorinho.favorite = false; 
-            newChorinho.archived = false; 
+            newChorinho.favorite = false;
+            newChorinho.archived = false;
 
             chorinhos.unshift(newChorinho);
             Storage.set(Storage.KEYS.CHORINHOS, chorinhos);
@@ -2579,14 +2771,21 @@
         }
     }
 
-    
-    
+
+
     function init() {
         window.chorinhoApp = new ChorinhoApp();
-        console.log('CHORINHO inicializado com sucesso!');
+        const config = Storage.getConfig();
+        const debugStatus = config.fields.debugMode ? '🔧 DEBUG ATIVADO' : '';
+        console.log(`CHORINHO inicializado com sucesso! ${debugStatus}`);
+
+        if (config.fields.debugMode) {
+            console.log('📝 Modo Debug: Logs detalhados habilitados');
+            console.log('💡 Dica: Abra um card e depois o painel do Chorinho para ver a estrutura do modal');
+        }
     }
 
-    
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
